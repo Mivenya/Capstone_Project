@@ -1,4 +1,3 @@
-
 import os
 import sys
 import pandas as pd
@@ -157,25 +156,36 @@ class DataVisualization:
         dataset_i = df.groupby(['color_I'])['price'].mean()
         dataset_j = df.groupby(['color_J'])['price'].mean()
 
-        fig, axs = plt.subplots(2, 4, figsize=(12,12))
+        fig, axs = plt.subplots(4, 2, figsize=(12,12))
         axs[0, 0].bar(dataset_d.index, dataset_d.values, width=0.5, color='green')
-        axs[0, 0].set_title('Pric')
-        axs[0, 1].bar(dataset_sex.index, dataset_sex.values, color='purple')
-        axs[0, 1].set_title('Charges by Sex')
-        axs[1, 0].bar(dataset_region.index, dataset_region.values, color='cyan')
-        axs[1, 0].set_title('Charges by Region')
-        axs[1, 1].bar(dataset_children.index, dataset_children.values, color='orange')
-        axs[1, 1].set_title('Charges based on Children')
+        axs[0, 0].set_title('Price for Color D')
+        axs[0, 1].bar(dataset_e.index, dataset_e.values, width=0.5, color='blue')
+        axs[0, 1].set_title('Price for Color E')
+        axs[1, 0].bar(dataset_f.index, dataset_f.values, width=0.5, color='cyan')
+        axs[1, 0].set_title('Price for Color F')
+        axs[1, 1].bar(dataset_g.index, dataset_g.values, width=0.5, color='orange')
+        axs[1, 1].set_title('Price for Color G')
+        axs[2, 0].bar(dataset_h.index, dataset_h.values, width=0.5, color='magenta')
+        axs[2, 0].set_title('Price for Color H')
+        axs[2, 1].bar(dataset_i.index, dataset_i.values, width=0.5, color='yellow')
+        axs[2, 1].set_title('Price for Color I')
+        axs[3, 0].bar(dataset_j.index, dataset_j.values, width=0.5, color='black')
+        axs[3, 0].set_title('Price for Color J')
 
+        
         for ax in axs.flat:
-            ax.set(xlabel='Feature', ylabel='Charges')
+            ax.set(xlabel='Feature', ylabel='Price')
 
-
+        return plt.show()
 
 if __name__== "__main__":
 
     #testing read dataset function
-    absolute_path= 'E:/Repos/capstone_project/capstone_project/diamonds.csv'
+
+    #os.path.isdir('E:/Repos/capstone_project/capstone_project/diamonds.csv') os path exists
+
+    #absolute_path= 'E:/Repos/capstone_project/capstone_project/diamonds.csv'
+    absolute_path= 'C:/Users/hyppi/Repos/capstone_project/capstone_project/diamonds.csv'
     df = read_dataset(dataset_path=absolute_path)
 
     #testing describe function
@@ -224,5 +234,8 @@ if __name__== "__main__":
 
     #testing plotting of correlation matrix
     corr_matrix = my_data_visualization.plot_correlationMatrix(df=retrieved_df)
-    print(corr_matrix)
+    #print(corr_matrix)
 
+    #testing plotting of histogram categorical
+    histogram = my_data_visualization.plot_histograms_categorical(df=retrieved_df)
+    print(histogram)
