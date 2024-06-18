@@ -140,7 +140,19 @@ class DataVisualization:
         correlation = sns.heatmap(df.corr(), annot=True).set_title('Correlated Heatmap of diamond features with price')
         return plt.show()
     
-    def plot_histograms_categorical(self, df: pd.DataFrame) -> plt.show():
+    def plot_pairplot(self, df: pd.DataFrame) -> plt.show(): 
+        """Using a pairplot to visualize features of dataset
+        
+        Args:
+            df (pd.Dataframe): The name of the dataframe to use for visualization
+
+        Returns: plt.show(): The heatmap visualization of the features
+        """
+        
+        sns.pairplot(df)
+        return plt.show()
+    
+    def plot_histograms_group(self, df: pd.DataFrame) -> plt.show():
         """Using a histogram to visualilze the dataset
 
         Args:
@@ -177,6 +189,19 @@ class DataVisualization:
             ax.set(xlabel='Feature', ylabel='Price')
 
         return plt.show()
+    
+    def plot_histograms_categorical(self, column_name1: str) -> plt.show():
+        """Using a histogram to visualilze the dataset
+
+        Args:
+            df (pd.Dataframe): The name of the dataframe to use for visualization
+
+        Returns: plt.show(): The histogram visualization of the features
+        """   
+        plt.figure(figsize=(12,12))
+        ax = sns.catplot(x=column_name1, kind="count", palette="ch:.25", data=self.df)
+        ax.figure.suptitle('Diamond Feature Count')
+        return plt.show()
 
 if __name__== "__main__":
 
@@ -184,8 +209,8 @@ if __name__== "__main__":
 
     #os.path.isdir('E:/Repos/capstone_project/capstone_project/diamonds.csv') os path exists
 
-    #absolute_path= 'E:/Repos/capstone_project/capstone_project/diamonds.csv'
-    absolute_path= 'C:/Users/hyppi/Repos/capstone_project/capstone_project/diamonds.csv'
+    absolute_path= 'E:/Repos/capstone_project/capstone_project/diamonds.csv'
+    #absolute_path= 'C:/Users/hyppi/Repos/capstone_project/capstone_project/diamonds.csv'
     df = read_dataset(dataset_path=absolute_path)
 
     #testing describe function
@@ -204,10 +229,11 @@ if __name__== "__main__":
     #print(cleaned_df)
 
     #testing feature one hot encoder
-    encoded_df = my_data_manipulation.encode_features(column_names="color")
+    #encoded_df = my_data_manipulation.encode_features(column_names="color")
     #print(encoded_df)
 
     #testing label encoder
+    lblencoded_df = my_data_manipulation.encode_label(column_names="color")
     lblencoded_df = my_data_manipulation.encode_label(column_names="cut")
     lblencoded_df = my_data_manipulation.encode_label(column_names="clarity")
     #print(lblencoded_df)
@@ -233,9 +259,20 @@ if __name__== "__main__":
     my_data_visualization = DataVisualization(df=df)
 
     #testing plotting of correlation matrix
-    corr_matrix = my_data_visualization.plot_correlationMatrix(df=retrieved_df)
+    #corr_matrix = my_data_visualization.plot_correlationMatrix(df=retrieved_df)
     #print(corr_matrix)
 
+    #testing pair Plot
+    pair_plot = my_data_visualization.plot_pairplot(df=retrieved_df)
+    print(pair_plot)
+
+
+    #testing plotting of histogram grouped
+    #histogram_group = my_data_visualization.plot_histograms_group(df=retrieved_df)
+    #print(histogram_group)
+
     #testing plotting of histogram categorical
-    histogram = my_data_visualization.plot_histograms_categorical(df=retrieved_df)
-    print(histogram)
+    #histogram_cat = my_data_visualization.plot_histograms_categorical(column_name1="clarity")
+    #print(histogram_cat)
+
+    
