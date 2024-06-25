@@ -125,8 +125,10 @@ class DataManipulation:
 # Class 2 = Data Visualization class, any below are members
 
 class DataVisualization:
-    def __init__(self, df: pd.DataFrame) -> pd.DataFrame:
+    def __init__(self, df: pd.DataFram, column_name1: str, column_name2: str) -> pd.DataFrame:
         self.df = df
+        self.column_name1 = column_name1
+        self.column_name2 = column_name2
 
     def plot_correlationMatrix(self, df: pd.DataFrame) -> plt.show(): 
         """Using a heatmap show correlation matrix of features of dataset
@@ -146,7 +148,7 @@ class DataVisualization:
         Args:
             df (pd.Dataframe): The name of the dataframe to use for visualization
 
-        Returns: plt.show(): The heatmap visualization of the features
+        Returns: plt.show(): The pairplot visualization of the features
         """
         
         sns.pairplot(df)
@@ -201,6 +203,18 @@ class DataVisualization:
         plt.figure(figsize=(12,12))
         ax = sns.catplot(x=column_name1, kind="count", palette="ch:.25", data=self.df)
         ax.figure.suptitle('Diamond Feature Count')
+        return plt.show()
+    
+    def box_plot(self, df: pd.DataFrame, column_name1: str, column_name2: str) -> plt.show(): 
+        """Using a boxplot to visualize features of dataset
+        
+        Args:
+            df (pd.Dataframe): The name of the dataframe to use for visualization
+
+        Returns: plt.show(): The boxplot visualization of the features
+        """
+        self.column
+        sns.boxplot(data=df, x=column_name1, y=column_name2, whis=(0, 100))
         return plt.show()
 
 if __name__== "__main__":
@@ -263,8 +277,8 @@ if __name__== "__main__":
     #print(corr_matrix)
 
     #testing pair Plot
-    pair_plot = my_data_visualization.plot_pairplot(df=retrieved_df)
-    print(pair_plot)
+    #pair_plot = my_data_visualization.plot_pairplot(df=retrieved_df)
+    #print(pair_plot)
 
 
     #testing plotting of histogram grouped
@@ -275,4 +289,7 @@ if __name__== "__main__":
     #histogram_cat = my_data_visualization.plot_histograms_categorical(column_name1="clarity")
     #print(histogram_cat)
 
-    
+    #testing plotting of box plot categorical
+    box_plotting = my_data_visualization.box_plot(column_name1="clarity")
+    box_plotting = my_data_visualization.box_plot(column_name2="cut")
+    print(box_plotting)
