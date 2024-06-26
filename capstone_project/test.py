@@ -1,6 +1,6 @@
 #Omar's example
 class Vehicle:
-    num_wheels=0
+    num_wheels=0 #static variable
     def __init__(self, brand: str, model: str, color: str):
         self.brand = brand
         self.model = model

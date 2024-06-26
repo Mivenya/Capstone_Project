@@ -6,56 +6,62 @@ from sklearn.metrics import accuracy_score
 from capstone_project import Analyzer
 
 analyzer.read_dataset
-# fit_predict_score class
 
+
+
+# fit_predict_score class
 class FitPredictScore():
-    def __init__(self, fit: str, predict: int, score: int, accuracy_score: float):    
+    def __init__(self, model: array, y_pred: arrray, score: int, accuracy_score: float):    
         self.model = self.model
-        self.predict = self.predict
+        self.y_pred = self.y_pred
         self.score = self.score
         self.accuracy_score = self.accuracy_score
 
-        # Fit = function
-        def fit(self, X_train: pd.DataFrame, y_train: pd.DataFrame): 
-            """ This function is to fit the dataset
+class Classifier(FitPredictScore):
+# Fit = function
+    def fit(self, X_train: pd.DataFrame, y_train: pd.DataFrame): 
+        super().__init__(model=model)
+        """ This function is to fit the dataset
                 
-                                    Args:
-                    df (pd.Dataframe): The name of the dataframe to fit
+                                Args:
+                df (pd.Dataframe): The name of the dataframe to fit
 
-                Returns: df (pd.Dataframe): The dataframe after fit
-                """   
-            self.model = model.fit(df(X_train, y_train))
+            Returns: df (pd.Dataframe): The dataframe after fit
+        """   
+        self.model = model.fit(df(X_train, y_train))
             
-        # Predict = function
-        def predict(self, X_test: pd.DataFrame) -> str: 
-            """ This function is to predict based on data within the dataset
-                
-                                    Args:
-                    df (pd.Dataframe): The name of the dataframe to predict
+    # Predict = function
+    def predict(self, X_test: pd.DataFrame, y_pred: pd.array) -> pd.array: 
+        super().__init__(model=model)
+        """ This function is to predict based on data within the dataset
+            
+                                Args:
+                df (pd.Dataframe): The name of the dataframe to predict
 
-                Returns: predict(): The prediction based on data within the dataframe
-                """       
-            y_pred = model_tree.predict(X_test)
-            return y_pred
-                    
-        # Score = function
-        def score(self, y_test: model, y_pred: model) -> accuracy_score: 
-            """ This function is to score based on data within the dataset
+            Returns: predict(): The prediction based on data within the dataframe
+            """       
+        y_pred = model.predict(X_test)
+        return y_pred
                 
-                                    Args:
-                    df (pd.Dataframe): The name of the dataframe containing data being scored
+    # Score = function
+    def score(self) -> accuracy_score: 
+        super().__init__(model=model, y_pred=y_pred)
+        """ This function is to score based on data within the dataset
+            
+                                Args:
+                df (pd.Dataframe): The name of the dataframe containing data being scored
 
-                Returns: score(): The score of the data
-                """   
-            #matrix = confusion_matrix(y_test,y_pred)
-            accuracy_score = accuracy_scores(y_test, y_pred)
-            return accuracy_score
+            Returns: score(): The score of the data
+            """   
+        #matrix = confusion_matrix(y_test,y_pred)
+        accuracy_score = accuracy_scores(model, y_pred)
+        return accuracy_score
 
 # Class of Classification Estimators =  any below are members 
 
 class ClassificationEstimators:
     def __init__(self, df: pd.DataFrame, column_name: str):
-        self.df = df.copy()
+        self.df = self.df
 
     
     def logistical_regression(self, column_name: str) -> pd.DataFrame: 
