@@ -1,3 +1,51 @@
+from sklearn.metrics import accuracy_score
+
+
+def score(y_true: np.array, y_predicted: np.array) -> float: # non member function version
+      accuracy_score = accuracy_score(y_true, y_predicted)
+      return accuracy_score
+
+class Classifier:
+    def __init__(self, random_state: int, params: dict):
+      self.random_state = random_state
+      self.model = self.create_model()
+      self.params = params
+
+    def create_model():
+       return None
+    
+    def fit(self, x_train: np.array, y_train: np.array, paramaters: dict)-> np.array:
+      self.model.fit(x_train, y_train, **parameters)
+
+    def predict(self, x: np.array) -> np.array:
+      predict_results = self.model.predict(x)
+      return predict_results
+    
+    def score(self, x:  np.array, y_true: np.array) -> float: #member function version
+      y_predicted = self.predict(x)
+      accuracy_score = accuracy_score(y_true, y_predicted)
+      return accuracy_score
+
+
+class LogisticRegression(Classifier):
+    def __init__(self, random_state: int, params: dict):
+       super().__init__(random_state=random_state, params=params)
+
+
+
+    def create_model(self) -> LogisticRegression:
+       model = LogisticRegression(**self.params)
+       return model
+
+if __name__ == "__main__":
+   params = {
+      "criterion": "lbgs"
+      "solver": 100
+   }
+
+    logistic_regression = LogisticRegression(params=params)
+
+
 #Omar's example
 class Vehicle:
     num_wheels=0 #static variable
