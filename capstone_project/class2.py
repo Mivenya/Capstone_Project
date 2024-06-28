@@ -10,6 +10,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.neural_network import MLPClassifier
+from sklearn.model_selection import train_test_split
 
 from capstone_project import Analyzer
 
@@ -169,3 +170,76 @@ class ANN_Classifier(FitPredictScore):
         """
         model = ann_classifier(**self.params)
         return model
+
+
+if __name__ == "__main__":
+   # df = analyzer.read_dataset()
+
+
+
+
+
+    absolute_path= 'E:/Repos/capstone_project/capstone_project/diamonds.csv'
+    #absolute_path= 'C:/Users/hyppi/Repos/capstone_project/capstone_project/diamonds.csv'
+    df = Analyzer.read_dataset(dataset_path=absolute_path)
+
+    #def score(y_true: np.array, y_predicted: np.array) -> float: # non member function version
+#      accuracy_score = accuracy_score(y_true, y_predicted)
+#      return accuracy_score
+
+#Before fitting and training we need to split the data
+
+# train is now 80% of the entire data set
+    x_train, x, y_train, y = train_test_split(x, y, random_state=0, test_size=0.2)
+
+# test is now 10% of the initial data set
+# validation is now 10% of the initial data set
+    x_val, x, y_val, y = train_test_split(x, y, test_size=.5)
+
+   #testing Logistic Regression
+    params = {
+    "criterion": "lbgs",
+    "solver": 100
+        }
+
+    logistic_regression = LogisticRegression(params=params)
+
+    #testing KNN Classifier
+    params = {
+        "criterion": "lbgs",
+        "solver": 100
+    }
+
+    knn_classifier = KNeighborsClassifier(params=params)
+
+    #testing Decision Tree
+    params = {
+    "gamma":"auto"
+    }
+
+    decision_tree = DecisionTreeClassifier(params=params)
+
+    #testing Random Forest
+    params = {
+    "gamma":"auto"
+    }
+
+    random_forest = RandomForestClassifier(params=params)
+
+    #testing SVC
+    params = {
+    "gamma":"auto"
+    }
+
+    svc = SVC(params=params)
+
+    #testing ANN
+    params = {
+    "max_iter": 1
+    }
+    ann_classifier = MLPClassifier(params=params)
+
+    #Plot of end results
+    #plt.figure(figsize=(12,8))
+    #plt.ylim(.5, 1)
+    #sns.barplot(x=estimator, y= accuracy_score)

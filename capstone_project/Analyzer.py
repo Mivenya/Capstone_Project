@@ -125,10 +125,10 @@ class DataManipulation:
 # Class 2 = Data Visualization class, any below are members
 
 class DataVisualization:
-    def __init__(self, df: pd.DataFram, column_name1: str, column_name2: str) -> pd.DataFrame:
+    def __init__(self, df: pd.DataFrame) -> pd.DataFrame:
         self.df = df
-        self.column_name1 = column_name1
-        self.column_name2 = column_name2
+        #self.column_name1 = column_name1
+        #self.column_name2 = column_name2
 
     def plot_correlationMatrix(self, df: pd.DataFrame) -> plt.show(): 
         """Using a heatmap show correlation matrix of features of dataset
@@ -213,83 +213,6 @@ class DataVisualization:
 
         Returns: plt.show(): The boxplot visualization of the features
         """
-        self.column
         sns.boxplot(data=df, x=column_name1, y=column_name2, whis=(0, 100))
         return plt.show()
 
-if __name__== "__main__":
-
-    #testing read dataset function
-
-    #os.path.isdir('E:/Repos/capstone_project/capstone_project/diamonds.csv') os path exists
-
-    absolute_path= 'E:/Repos/capstone_project/capstone_project/diamonds.csv'
-    #absolute_path= 'C:/Users/hyppi/Repos/capstone_project/capstone_project/diamonds.csv'
-    df = read_dataset(dataset_path=absolute_path)
-
-    #testing describe function
-    #describe(dataset=df)
-    
-   
-    #testing DataManipulation class
-    my_data_manipulation = DataManipulation(df=df)
-
-    #testing drop na
-    data_df = my_data_manipulation.drop_missing_data(df)
-    #print(data_df)
-
-    #testing drop column
-    cleaned_df = my_data_manipulation.drop_column(column_names="Unnamed: 0")
-    #print(cleaned_df)
-
-    #testing feature one hot encoder
-    #encoded_df = my_data_manipulation.encode_features(column_names="color")
-    #print(encoded_df)
-
-    #testing label encoder
-    lblencoded_df = my_data_manipulation.encode_label(column_names="color")
-    lblencoded_df = my_data_manipulation.encode_label(column_names="cut")
-    lblencoded_df = my_data_manipulation.encode_label(column_names="clarity")
-    #print(lblencoded_df)
-
-    #testing label encoder
-    scaled_df = my_data_manipulation.standardize(df=df)
-    #print(scaled_df)
-    
-    #testing dataset shuffle
-    shuffled_df = my_data_manipulation.shuffle(df=df)
-    #print(shuffled_df)
-
-    #testing dataset 50% sample
-    sampled_df = my_data_manipulation.sample(df=df)
-    #print(sampled_df)
-
-    #testing retrieve data
-    retrieved_df = my_data_manipulation.retrieve_data(df=df)
-    print(retrieved_df)
-
-
-    #testing DataVisualization class
-    my_data_visualization = DataVisualization(df=df)
-
-    #testing plotting of correlation matrix
-    #corr_matrix = my_data_visualization.plot_correlationMatrix(df=retrieved_df)
-    #print(corr_matrix)
-
-    #testing pair Plot
-    #pair_plot = my_data_visualization.plot_pairplot(df=retrieved_df)
-    #print(pair_plot)
-
-
-    #testing plotting of histogram grouped
-    #histogram_group = my_data_visualization.plot_histograms_group(df=retrieved_df)
-    #print(histogram_group)
-
-    #testing plotting of histogram categorical
-    #histogram_cat = my_data_visualization.plot_histograms_categorical(column_name1="clarity")
-    #print(histogram_cat)
-
-    #testing plotting of box plot categorical
-    box_plotting = my_data_visualization.box_plot(column_name1="clarity")
-    box_plotting = my_data_visualization.box_plot(column_name2="cut")
-    print(box_plotting)
