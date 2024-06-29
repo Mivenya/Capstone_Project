@@ -4,7 +4,8 @@ from sklearn.model_selection import train_test_split
 
 def main(): 
 #read data
-    absolute_path= 'E:/Repos/capstone_project/capstone_project/diamonds.csv'
+    #absolute_path= 'E:/Repos/capstone_project/capstone_project/diamonds.csv'
+    absolute_path= 'capstone_project/diamonds.csv'
     df = Analyzer.read_dataset(dataset_path=absolute_path)
 
 #analyzer
@@ -33,7 +34,7 @@ def main():
     #print(lblencoded_df)
 
 # Scale encoded data
-    scaled_df = my_data_manipulation.standardize(df=df)
+    #scaled_df = my_data_manipulation.standardize(df=df)
     #print(scaled_df)
 
 # Shuffle dataset
@@ -50,7 +51,7 @@ def main():
 
 
 #testing DataVisualization class
-    my_data_visualization = Analyzer.DataVisualization(df=df)
+    #my_data_visualization = Analyzer.DataVisualization(df=df)
 
 # Plot correlation matrix
     #corr_matrix = my_data_visualization.plot_correlationMatrix(df=retrieved_df)
@@ -69,32 +70,31 @@ def main():
     #print(histogram_cat)
 
 # Box plot categorical
-    box_plotting = my_data_visualization.box_plot(df=retrieved_df, column_name1="clarity", column_name2="cut")
-    print(box_plotting)# execute encoding
+    #box_plotting = my_data_visualization.box_plot(df=retrieved_df, column_name1="clarity", column_name2="cut")
+    #print(box_plotting)# execute encoding
 
-main()
 #Before fitting and training we need to split the data
 
 # train is now 80% of the entire data set
-   # y_true = df['price'].values
-  # x = df[["carat","cut","color","clarity","depth","table","x","y","z"]].values
+    y_true = retrieved_df['price'].values
+    x = retrieved_df[["carat","cut","color","clarity","depth","table","x","y","z"]].values
     
-    #x_train, x, y_train, y_true = train_test_split(x, y_true, random_state=0, test_size=0.2)
+    x_train, x, y_train, y_true = train_test_split(x, y_true, random_state=0, test_size=0.2)
 
 # test is now 10% of the initial data set
 # validation is now 10% of the initial data set
-   # x_val, x, y_val, y_true = train_test_split(x, y_true, random_state=0, test_size=.5)
+    x_val, x, y_val, y_true = train_test_split(x, y_true, random_state=0, test_size=.5)
+    #print(y_true)   
 
 
+    score_dict = []
 
-    #score_dict[]
+    
+    logistic_regression_classifier = Classifier.CustomLogiscticRegression(random_state=0, params={'solver':'lbfgs'})
+    logistic_regression_classifier.fit(x_train, y_train)
+    score_dict["Logistic Regression"] = logistic_regression_classifier.predict(y_true, y_predicted)
 
-
-    #logistic_regression_classifier = classifier.LogisticRegression()
-    #logistic_regression_classifier.fit(x_train, y_train)
-    #score_dict["Logistic Regression"] = logistic_regression_classifier.score(x_test)
-
-
+main()
                                                                              
 #     ann_classifier = classifier.ANN()                                                                         )
 # #classifier

@@ -18,17 +18,17 @@ from capstone_project import Analyzer
 
 # fit_predict_score class
 class FitPredictScore():
-    def __init__(self, random_state: int, model: dict, params: dict):
+    def __init__(self, random_state: int, model: dict):
         self.random_state = random_state
-        self.model = self.create_model()
-        self.params = params()
+        self.model = model
+        #self.params = params()
 
     # way to see the results of multiple models and compare - to build out and plot the results
-    def create_model():
-        return None
+   # def create_model():
+       # return None
 
     # Fit = function
-    def fit(self, x_train: np.array, y_train: np.array, parameters: dict) -> np.array:
+    def fit(self, x_train: np.array, y_train: np.array) -> np.array:
         """ This function is to fit the data with x and y training arrays
               Args:
                 x_train(np.array): The name of the x array to fit
@@ -36,7 +36,7 @@ class FitPredictScore():
 
             Returns: model(np.array): The arrays after fit
         """
-        self.model.fit(x_train, y_train, **parameters)
+        self.model.fit(x_train, y_train)
 
     # Predict = function
     def predict(self, x: np.array) -> np.array:
@@ -70,12 +70,13 @@ class FitPredictScore():
  #   def __init__(self):
 
 
-class LogiscticRegression(FitPredictScore):
+class CustomLogiscticRegression(FitPredictScore):
     #estimator = "Logistic Regression"
     def __init__(self, random_state: int, params: dict):
-        super().__init__(random_state=random_state, params=params)
+        model = LogisticRegression(**params)
+        super().__init__(random_state=random_state, model=model)
 
-    def create_model(self):
+   #def create_model(self):
         """Performs classification with method of -> logistical regression
 
         Args:
@@ -83,10 +84,10 @@ class LogiscticRegression(FitPredictScore):
 
         Returns: model for the method -> logistical regression
         """
-        model = logistic_regression(**self.params)
-        return model
+       # model = LogisticRegression(**self.params)
+       # return model
 
-class KNN_Classifier(FitPredictScore):
+class CustomKNN_Classifier(FitPredictScore):
     #estimator = "KNN"
     def __init__(self, random_state: int, params: dict):
         super().__init__(random_state=random_state, params=params)
@@ -102,7 +103,7 @@ class KNN_Classifier(FitPredictScore):
         model = knn_classifier(**self.params)
         return model
 
-class DecisionTree(FitPredictScore):
+class CustomDecisionTree(FitPredictScore):
     #estimator = "Decision Tree"
     def __init__(self, random_state: int, params: dict):
         super().__init__(random_state=random_state, params=params)
@@ -119,7 +120,7 @@ class DecisionTree(FitPredictScore):
         model = decision_tree(**self.params)
         return model
 
-class RandomForest(FitPredictScore):
+class CustomRandomForest(FitPredictScore):
     #estimator = "Random Forest"
     def __init__(self, random_state: int, params: dict):
         super().__init__(random_state=random_state, params=params)
@@ -136,7 +137,7 @@ class RandomForest(FitPredictScore):
         model = random_forest(**self.params)
         return model
 
-class SVC(FitPredictScore):
+class CustomSVC(FitPredictScore):
     estimator = "SVC"
     def __init__(self, random_state: int, params: dict):
         super().__init__(random_state=random_state, params=params)
@@ -153,7 +154,7 @@ class SVC(FitPredictScore):
         model = svc(**self.params)
         return model
 
-class ANN_Classifier(FitPredictScore):
+class CustomANN_Classifier(FitPredictScore):
     estimator = "ANN"
     def __init__(self, random_state: int, params: dict):
         super().__init__(random_state=random_state, params=params)
