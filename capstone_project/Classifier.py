@@ -50,7 +50,7 @@ class FitPredictScore():
         return model_predict
 
     # Score = function
-    def score(self, x: np.array, y_true: np.array) -> float:
+    def score(self, y_true: np.array, log_reg_predict: float) -> float:
         """ This function is to score based on data within the array, and append the model name and score for a comparison
             Args:
                 y_predicted(np.array): The name of the array data predicted
@@ -59,9 +59,9 @@ class FitPredictScore():
             Returns: accuracy_score: The score of the data
             """
             #### QUESTION - best way to also append the estimator/model name from the class?
-        y_predicted = self.predict(x)
-        accuracy_score = accuracy_score(y_true, y_predicted)
-        return accuracy_score
+        #y_predicted = self.predict(x)
+        class_score = accuracy_score(y_true, log_reg_predict)
+        return class_score
 
 # Class of Classification Estimators =  any below are members
 
@@ -84,15 +84,16 @@ class CustomLogiscticRegression(FitPredictScore):
 
         Returns: model for the method -> logistical regression
         """
-       # model = LogisticRegression(**self.params)
-       # return model
+       #model = LogisticRegression(**self.params)
+       #return model
 
 class CustomKNN_Classifier(FitPredictScore):
     #estimator = "KNN"
-    def __init__(self, random_state: int, params: dict):
-        super().__init__(random_state=random_state, params=params)
+    def __init__(self, n_neighbours: int, params: dict):
+        model = KNeighborsClassifier(n_neighbours,**params)
+        super().__init__(random_state=None,model=model)
 
-    def create_model(self):
+    #def create_model(self):
         """Performs classification with method of -> logistical regression
 
         Args:
@@ -100,16 +101,20 @@ class CustomKNN_Classifier(FitPredictScore):
 
         Returns: model for the method -> logistical regression
         """
-        model = knn_classifier(**self.params)
-        return model
+
+        #neighbour = KNeighborsClassifier(n_neighbors = best_knn)
+
+
+        #return model
 
 class CustomDecisionTree(FitPredictScore):
     #estimator = "Decision Tree"
-    def __init__(self, random_state: int, params: dict):
-        super().__init__(random_state=random_state, params=params)
+    def __init__(self, params: dict):
+        model = DecisionTreeClassifier(**params)
+        super().__init__(random_state=None, model=model)
 
 
-    def create_model(self):
+    #def create_model(self):
         """Performs classification with method of -> logistical regression
 
         Args:
@@ -117,16 +122,17 @@ class CustomDecisionTree(FitPredictScore):
 
         Returns: model for the method -> logistical regression
         """
-        model = decision_tree(**self.params)
-        return model
+        #model = decision_tree(params)
+        #return model
 
 class CustomRandomForest(FitPredictScore):
     #estimator = "Random Forest"
-    def __init__(self, random_state: int, params: dict):
-        super().__init__(random_state=random_state, params=params)
+    def __init__(self, n_estimators: int, random_state: int, params: dict):
+        model = RandomForestClassifier(n_estimators,**params)
+        super().__init__(random_state=random_state, model=model)
 
 
-    def create_model(self):
+    #def create_model(self):
         """Performs classification with method of -> logistical regression
 
         Args:
@@ -134,16 +140,17 @@ class CustomRandomForest(FitPredictScore):
 
         Returns: model for the method -> logistical regression
         """
-        model = random_forest(**self.params)
-        return model
+        #model = random_forest(**params)
+        #return model
 
 class CustomSVC(FitPredictScore):
-    estimator = "SVC"
+    #estimator = "SVC"
     def __init__(self, random_state: int, params: dict):
-        super().__init__(random_state=random_state, params=params)
+        model = SVC(**params)
+        super().__init__(random_state=random_state, model=model)
 
 
-    def create_model(self):
+   # def create_model(self):
         """Performs classification with method of -> logistical regression
 
         Args:
@@ -151,16 +158,17 @@ class CustomSVC(FitPredictScore):
 
         Returns: model for the method -> logistical regression
         """
-        model = svc(**self.params)
-        return model
+        #model = svc(**params)
+        #return model
 
 class CustomANN_Classifier(FitPredictScore):
-    estimator = "ANN"
+    #estimator = "ANN"
     def __init__(self, random_state: int, params: dict):
-        super().__init__(random_state=random_state, params=params)
+        model = MLPClassifier(**params)
+        super().__init__(model=model, random_state=random_state)
 
 
-    def create_model(self):
+   # def create_model(self):
         """Performs classification with method of -> logistical regression
 
         Args:
@@ -168,5 +176,5 @@ class CustomANN_Classifier(FitPredictScore):
 
         Returns: model for the method -> logistical regression
         """
-        model = ann_classifier(**self.params)
-        return model
+        #model = MLPClassifier(**params)
+        #return model

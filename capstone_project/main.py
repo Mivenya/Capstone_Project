@@ -51,7 +51,7 @@ def main():
 
 
 #testing DataVisualization class
-    #my_data_visualization = Analyzer.DataVisualization(df=df)
+   #my_data_visualization = Analyzer.DataVisualization(df=df)
 
 # Plot correlation matrix
     #corr_matrix = my_data_visualization.plot_correlationMatrix(df=retrieved_df)
@@ -87,80 +87,76 @@ def main():
     #print(y_true)   
 
 
-    score_dict = []
+    score_dict = {}
 
-    
-    logistic_regression_classifier = Classifier.CustomLogiscticRegression(random_state=0, params={'solver':'lbfgs'})
+ #testing logisctical regression classifier   
+    logistic_regression_classifier = Classifier.CustomLogiscticRegression(params={'solver':'lbfgs', 'tol': 0.0001, 'max_iter': 1000}, random_state=0)
     logistic_regression_classifier.fit(x_train, y_train)
-    score_dict["Logistic Regression"] = logistic_regression_classifier.predict(y_true, y_predicted)
-
-main()
-                                                                             
-#     ann_classifier = classifier.ANN()                                                                         )
-# #classifier
+    log_reg_predict = logistic_regression_classifier.predict(x)
+    score_dict["Logistic Regression"] = logistic_regression_classifier.score(y_true, log_reg_predict)
+    print(score_dict)
+  
 
 
+# testing Knn Classifier
 
-# if __name__ == "__main__":
-#    # df = analyzer.read_dataset()
+    #KNN
 
+    #neighbour = KNeighborsRegressor(n_neighbors = best_knn)
+    #scores = []
+    #nums = range(1,25)
+    #best_knn = []
+    #best_score_i = -1000
 
+    #for i in nums:
+    #    knn = Classifier.KNeighborsClassifier(n_neighbors = i)
+    #    knn.fit(x_train, y_train)
+    #    score_i = knn.score(x, y_true)
+     #   scores.append(score_i)
+        
+    #    if score_i > best_score_i:
+    #        best_score_i = score_i
+    #        best_knn = i
 
+    #print(best_knn)
 
+    #knn = Classifier.CustomKNN_Classifier(n_neighbours=best_knn, params={})
+    #knn.fit(x_train, y_train)
+    #log_reg_predict = knn.predict(x)
+    #score_dict["KNN"] = knn.score(y_true, log_reg_predict)
+    #print(score_dict)
 
-#     absolute_path= 'E:/Repos/capstone_project/capstone_project/diamonds.csv'
-#     #absolute_path= 'C:/Users/hyppi/Repos/capstone_project/capstone_project/diamonds.csv'
-#     df = Analyzer.read_dataset(dataset_path=absolute_path)
+ #testing Decistion Tree classifier   
+   # decision_tree_classifier = Classifier.CustomDecisionTree(params={'criterion':'gini'})
+   # decision_tree_classifier.fit(x_train, y_train)
+    #log_reg_predict = decision_tree_classifier.predict(x)
+   # score_dict["Decision Tree"] = decision_tree_classifier.score(y_true, log_reg_predict)
+   # print(score_dict)
 
-#     #def score(y_true: np.array, y_predicted: np.array) -> float: # non member function version
-# #      accuracy_score = accuracy_score(y_true, y_predicted)
-# #      return accuracy_score
+ #testing Random Forest classifier   
+    
+    #random_forest_classifier = Classifier.CustomRandomForest(n_estimators=100, random_state=0,params={'criterion':'gini', 'max_leaf_nodes': 100})
+    #random_forest_classifier.fit(x_train, y_train)
+    #log_reg_predict = random_forest_classifier.predict(x)
+    #score_dict["Random Forest"] = random_forest_classifier.score(y_true, log_reg_predict)
+    #print(score_dict)
 
+#testing SVC Classifier
+    #svc_classifier = Classifier.CustomSVC(random_state=0, params={'kernel':'rbf', 'max_iter': 3, 'verbose':True})
+    #svc_classifier.fit(x_train, y_train)
+    #log_reg_predict = svc_classifier.predict(x)
+    #score_dict["SVC"] = svc_classifier.score(y_true, log_reg_predict)
+    #print(score_dict)
 
-#    #testing Logistic Regression
-#    params = {
-#       "criterion": "lbgs"
-#       "solver": 100
-#    }
-
-#     logistic_regression = LogisticRegression(params=params)
-
-#    #testing KNN Classifier
-#    params = {
-#       "criterion": "lbgs"
-#       "solver": 100
-#    }
-
-#     knn_classifier = KNeighborsClassifier(params=params)
-
-#     #testing Decision Tree
-#     params = {
-#     "gamma":"auto"
-#    }
-
-#     decision_tree = DecisionTreeClassifier(params=params)
-
-#     #testing Random Forest
-#     params = {
-#     "gamma":"auto"
-#    }
-
-#     random_forest = RandomForestClassifier(params=params)
-
-#    #testing SVC
-#     params = {
-#     "gamma":"auto"
-#    }
-
-#     svc = SVC(params=params)
-
-#    #testing ANN
-#     params = {
-#     "max_iter": 1
-#    }
-#     ann_classifier = MLPClassifier(params=params)
+#testing ANN Classifier
+    #ann_classifier = Classifier.CustomANN_Classifier(params={"hidden_layer_sizes":(100, 100, 100),'activation':'relu', 'solver':'adam', 'max_iter': 1000}, random_state=0)
+    #ann_classifier.fit(x_train, y_train)
+    #log_reg_predict = ann_classifier.predict(x)
+    #score_dict["ANN"] = ann_classifier.score(y_true, log_reg_predict)
+    #print(score_dict)
 
 # #Plot of end results
 # #plt.figure(figsize=(12,8))
 # #plt.ylim(.5, 1)
 # #sns.barplot(x=estimator, y= accuracy_score)
+main()
