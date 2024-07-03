@@ -79,8 +79,8 @@ class CustomLogisticRegression(FitPredictScore):
 
 class CustomKNN_Classifier(FitPredictScore):
     #estimator = "KNN"
-    def __init__(self, n_neighbours: int, params: dict):
-        model = KNeighborsClassifier(n_neighbours,**params)
+    def __init__(self, n_neighbors: int, params: dict):
+        model = KNeighborsClassifier(n_neighbors,**params)
         super().__init__(random_state=None,model=model)
 
     #def create_model(self):

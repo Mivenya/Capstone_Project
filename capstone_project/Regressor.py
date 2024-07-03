@@ -80,14 +80,14 @@ class CustomLinearRegression(FitPredictScore):
         """
 
 class CustomKNN_Regressor(FitPredictScore):
-    def __init__(self, n_neighbours: int, params: dict):
-        model = KNeighborsRegressor(n_neighbours,**params)
+    def __init__(self, n_neighbors: int, params: dict):
+        model = KNeighborsRegressor(n_neighbors,**params)
         super().__init__(random_state=None,model=model)
 
     """Performs regression with method of -> KNN regression
 
         Args:
-            n_neighbours(int): the best neighbours
+            n_neighbors(int): the best neighbours
             model(): The model with the selected classification method.
 
         Returns: None

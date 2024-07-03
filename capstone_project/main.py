@@ -6,8 +6,8 @@ from sklearn.metrics import r2_score, mean_squared_error, root_mean_squared_erro
 def main(): 
 #read data
     #absolute_path= 'E:/Repos/capstone_project/capstone_project/diamonds.csv'
-    absolute_path= 'capstone_project/diamonds.csv'
-    df = Analyzer.read_dataset(dataset_path=absolute_path)
+    path = 'capstone_project/diamonds.csv'
+    df = Analyzer.read_dataset(dataset_path=path)
 
 #Testing for analyzer
 
@@ -80,8 +80,7 @@ def main():
 
 # train is now 80% of the entire data set
     y_true = retrieved_df['clarity'].values
-    y_true = y_true.astype(int)
-    #y_train = y_train.astype(int)
+    y_true = y_true.astype(int) #needed to add as wasn't turning into an object
     x = retrieved_df[["carat","cut","color", "price", "depth","table","x","y","z"]].values
     
     x_train, x, y_train, y_true = train_test_split(x, y_true, random_state=0, test_size=0.8)
@@ -95,10 +94,10 @@ def main():
 
 # NOTES for presentation: for Classifier we want the label to be clarity of the diamonds.
 
-    score_dict = {}
+ #   score_dict = {}
 
 #  #testing logisctical regression classifier   
-# NOTES: for presentation - use scalar and max iter 1000 for result of approx .56-.57
+# NOTES: for presentation - use scalar and max iter 1000 for result of approx .55-.57
     # logistic_regression_classifier = Classifier.CustomLogisticRegression(params={'solver':'lbfgs', 'C':1.0,'max_iter':1000}, random_state=0) 
     # logistic_regression_classifier.fit(x_train, y_train)
     # logistic_regression_classifier.score(y_true=y_true, x=x)
@@ -106,9 +105,9 @@ def main():
 
 
 # testing Knn Classifier
-
-    #KNN
-    
+# NOTES: for presentation - Appears best n_neighbor is always 1
+    #first find best n_neighbor
+        
     scores = []
     nums = range(1,25)
     best_knn = []
@@ -126,7 +125,7 @@ def main():
 
     print(best_knn)
 
-    knn = Classifier.CustomKNN_Classifier(n_neighbours=best_knn, params={})
+    knn = Classifier.CustomKNN_Classifier(n_neighbors=best_knn, params={})
     knn.fit(x_train, y_train)
     knn.score(y_true=y_true, x=x)
 
@@ -197,7 +196,7 @@ def main():
 
     # print(best_knn)
 
-    # knn_reg = Regressor.CustomKNN_Regressor(n_neighbours=best_knn, params={})
+    # knn_reg = Regressor.CustomKNN_Regressor(n_neighbors=best_knn, params={})
     # knn_reg.fit(x_train, y_train)
     # knn_reg.score(y_true=y_true, x=x)
 
