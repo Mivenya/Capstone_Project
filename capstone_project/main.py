@@ -94,18 +94,19 @@ def main():
 
 # NOTES for presentation: for Classifier we want the label to be clarity of the diamonds.
 
- #   score_dict = {}
+    score_dict = {}
+    matrix_dict = {}
 
 #  #testing logisctical regression classifier   
 # NOTES: for presentation - use scalar and max iter 1000 for result of approx .55-.57
-    # logistic_regression_classifier = Classifier.CustomLogisticRegression(params={'solver':'lbfgs', 'C':1.0,'max_iter':1000}, random_state=0) 
-    # logistic_regression_classifier.fit(x_train, y_train)
-    # logistic_regression_classifier.score(y_true=y_true, x=x)
-  
-
+    logistic_regression_classifier = Classifier.CustomLogisticRegression(params={'solver':'lbfgs', 'C':1.0,'max_iter':1000}, random_state=0) 
+    logistic_regression_classifier.fit(x_train, y_train)
+    score_dict["Logistic Regression"] = logistic_regression_classifier.score(y_true=y_true, x=x)
+    matrix_dict["Logistic Regression"] = logistic_regression_classifier.conf_matrix(y_true=y_true, x=x)
+    #logistic_regression_classifier.plt_conf_matrix(y_true=y_true, x=x)
 
 # testing Knn Classifier
-# NOTES: for presentation - Appears best n_neighbor is always 1
+# NOTES: for presentation - Appears best n_neighbor is always 1 and consistently scores .55
     #first find best n_neighbor
         
     scores = []
@@ -123,41 +124,44 @@ def main():
             best_score_i = score_i
             best_knn = i
 
-    print(best_knn)
+    #print(best_knn)
 
     knn = Classifier.CustomKNN_Classifier(n_neighbors=best_knn, params={})
     knn.fit(x_train, y_train)
-    knn.score(y_true=y_true, x=x)
-
+    score_dict["KNN"] = knn.score(y_true=y_true, x=x)
+    matrix_dict["KNN"] = knn.conf_matrix(y_true=y_true, x=x)
 
  #testing Decistion Tree classifier   
-   # decision_tree_classifier = Classifier.CustomDecisionTree(params={'criterion':'gini'})
-   # decision_tree_classifier.fit(x_train, y_train)
-    #log_reg_predict = decision_tree_classifier.predict(x)
-   # score_dict["Decision Tree"] = decision_tree_classifier.score(y_true, log_reg_predict)
-   # print(score_dict)
+ # NOTES: for presentation - used criterion Gini and scores approx .64-.65
+    decision_tree_classifier = Classifier.CustomDecisionTree(params={'criterion':'gini'})
+    decision_tree_classifier.fit(x_train, y_train)
+    score_dict["Decision Tree"] = decision_tree_classifier.score(y_true=y_true, x=x)
+    matrix_dict["Decision Tree"] = decision_tree_classifier.conf_matrix(y_true=y_true, x=x)
 
  #testing Random Forest classifier   
-    
-    #random_forest_classifier = Classifier.CustomRandomForest(n_estimators=100, random_state=0,params={'criterion':'gini', 'max_leaf_nodes': 100})
-    #random_forest_classifier.fit(x_train, y_train)
-    #log_reg_predict = random_forest_classifier.predict(x)
-    #score_dict["Random Forest"] = random_forest_classifier.score(y_true, log_reg_predict)
-    #print(score_dict)
+# NOTES: for presentation - used criterion Gini and scores approx .69-.70  
+    random_forest_classifier = Classifier.CustomRandomForest(n_estimators=100, random_state=0,params={'criterion':'gini'})
+    random_forest_classifier.fit(x_train, y_train)
+    score_dict["Random Forest"] = random_forest_classifier.score(y_true=y_true, x=x)
+    matrix_dict["Random Forest"] = random_forest_classifier.conf_matrix(y_true=y_true, x=x)
 
 #testing SVC Classifier
-    #svc_classifier = Classifier.CustomSVC(random_state=0, params={'kernel':'rbf', 'max_iter': 3, 'verbose':True})
-    #svc_classifier.fit(x_train, y_train)
-    #log_reg_predict = svc_classifier.predict(x)
-    #score_dict["SVC"] = svc_classifier.score(y_true, log_reg_predict)
-    #print(score_dict)
+# NOTES: for presentation - used defaults and scores at .56
+    svc_classifier = Classifier.CustomSVC(random_state=0, params={})
+    svc_classifier.fit(x_train, y_train)
+    score_dict["SVC"] = svc_classifier.score(y_true=y_true, x=x)
+    matrix_dict["SVC"] = svc_classifier.conf_matrix(y_true=y_true, x=x)
 
 #testing ANN Classifier
-    #ann_classifier = Classifier.CustomANN_Classifier(params={"hidden_layer_sizes":(100, 100, 100),'activation':'relu', 'solver':'adam', 'max_iter': 1000}, random_state=0)
-    #ann_classifier.fit(x_train, y_train)
-    #log_reg_predict = ann_classifier.predict(x)
-    #score_dict["ANN"] = ann_classifier.score(y_true, log_reg_predict)
-    #print(score_dict)
+# NOTES: for presentation - did some hypertuning here to get .69
+    ann_classifier = Classifier.CustomANN_Classifier(params={"hidden_layer_sizes":(100, 100, 100),'activation':'relu', 'solver':'adam', 'max_iter': 1000}, random_state=0)
+    ann_classifier.fit(x_train, y_train)
+    score_dict["ANN"] = ann_classifier.score(y_true=y_true, x=x)
+    matrix_dict["ANN"] = ann_classifier.conf_matrix(y_true=y_true, x=x)
+
+# Printing summary of scores and confusion matrices    
+    print(score_dict)
+    print(matrix_dict)
 
 # #Plot of end results
 # #plt.figure(figsize=(12,8))

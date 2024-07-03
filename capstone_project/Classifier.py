@@ -1,12 +1,15 @@
 import numpy as np
 
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.neural_network import MLPClassifier
+
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 
@@ -50,9 +53,27 @@ class FitPredictScore():
         log_reg_predict = self.predict(x)
         class_score = {}  
         class_score["Accuracy Score"] = accuracy_score(y_true, log_reg_predict)
-        print(class_score)
         return class_score
 
+        #Adding the visualization of the confusion matrix
+    def conf_matrix(self, y_true: np.array, x: np.array) -> np.array:
+        log_reg_predict = self.predict(x)
+        conf_matrix_list = {}
+        conf_matrix_list["Confusion Matrix"] = confusion_matrix(y_true, log_reg_predict)
+        return conf_matrix_list
+    
+
+
+    # def plt_conf_matrix(self, y_true: np.array, x: np.array) -> plt:  
+    #     log_reg_predict = self.predict(x)
+    #     cm_display = self.ConfusionMatrixDisplay(y_true, log_reg_predict)
+    # #     log_reg_predict = self.predict(x)
+    #     matrix = confusion_matrix(y_true, log_reg_predict)
+    #     plt.figure(figsize=(8,6))
+    #     labels = ['True Neg', 'False Pos', 'False Neg', 'True Pos']
+    #     labels = np.asarray(labels).reshape(2,2)
+    #     sns.heatmap(matrix, annot=True, fmt='', cmap='Blues')
+    #     return plt.show()
 # Class of Classification Estimators =  any below are members
 
 #class ClassificationEstimators(FitPredictScore):
