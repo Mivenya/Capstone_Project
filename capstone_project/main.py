@@ -36,7 +36,7 @@ def main():
     #print(lblencoded_df)
 
 # Scale encoded data
-    #scaled_df = my_data_manipulation.standardize(df=df)
+    scaled_df = my_data_manipulation.standardize(df=df)
     #print(scaled_df)
 
 # Shuffle dataset
@@ -90,7 +90,6 @@ def main():
 # validation is now 10% of the initial data set
     x_val, x, y_val, y_true = train_test_split(x, y_true, random_state=0, test_size=.5)
 
-    score_dict = {}
 
 # # Testing classifier.py
 
@@ -99,11 +98,10 @@ def main():
     score_dict = {}
 
 #  #testing logisctical regression classifier   
-#     logistic_regression_classifier = Classifier.CustomLogiscticRegression(params={}, random_state=0) 
-#     logistic_regression_classifier.fit(x_train, y_train)
-#     log_reg_predict = logistic_regression_classifier.predict(x)
-#     score_dict["Logistic Regression"] = logistic_regression_classifier.score(y_true, log_reg_predict)
-#     print(score_dict)
+# NOTES: for presentation - use scalar and max iter 1000 for result of approx .56-.57
+    # logistic_regression_classifier = Classifier.CustomLogisticRegression(params={'solver':'lbfgs', 'C':1.0,'max_iter':1000}, random_state=0) 
+    # logistic_regression_classifier.fit(x_train, y_train)
+    # logistic_regression_classifier.score(y_true=y_true, x=x)
   
 
 
@@ -111,7 +109,7 @@ def main():
 
     #KNN
     
-    """  scores = []
+    scores = []
     nums = range(1,25)
     best_knn = []
     best_score_i = -1000
@@ -130,9 +128,8 @@ def main():
 
     knn = Classifier.CustomKNN_Classifier(n_neighbours=best_knn, params={})
     knn.fit(x_train, y_train)
-    log_reg_predict = knn.predict(x)
-    score_dict["KNN"] = knn.score(y_true, log_reg_predict)
-    print(score_dict) """
+    knn.score(y_true=y_true, x=x)
+
 
  #testing Decistion Tree classifier   
    # decision_tree_classifier = Classifier.CustomDecisionTree(params={'criterion':'gini'})
@@ -174,9 +171,9 @@ def main():
 # NOTES for presentation: for Regressor we want to switch price and clarity again for label as the problem we are trying to solve with regression is the pricing of the diamonds based on their features
 
 #testing Linear Regressor  
-    linear_regression = Regressor.CustomLinearRegression(params={}, random_state=0)
-    linear_regression.fit(x_train, y_train)
-    linear_regression.score(y_true=y_true, x=x)
+    # linear_regression = Regressor.CustomLinearRegression(params={}, random_state=0)
+    # linear_regression.fit(x_train, y_train)
+    # linear_regression.score(y_true=y_true, x=x)
  
 
 # testing Knn Regressor
