@@ -1,6 +1,7 @@
-from capstone_project import Analyzer, Classifier
+from capstone_project import Analyzer, Classifier, Regressor
 
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score, mean_squared_error, root_mean_squared_error, mean_absolute_error
 
 def main(): 
 #read data
@@ -8,7 +9,8 @@ def main():
     absolute_path= 'capstone_project/diamonds.csv'
     df = Analyzer.read_dataset(dataset_path=absolute_path)
 
-#analyzer
+#Testing for analyzer
+
 #data exploration and preprocessing
     my_data_manipulation = Analyzer.DataManipulation(df=df)
 
@@ -51,6 +53,7 @@ def main():
 
 
 #testing DataVisualization class
+
    #my_data_visualization = Analyzer.DataVisualization(df=df)
 
 # Plot correlation matrix
@@ -76,23 +79,30 @@ def main():
 #Before fitting and training we need to split the data
 
 # train is now 80% of the entire data set
-    y_true = retrieved_df['price'].values
-    x = retrieved_df[["carat","cut","color","clarity","depth","table","x","y","z"]].values
+    y_true = retrieved_df['clarity'].values
+    y_true = y_true.astype(int)
+    #y_train = y_train.astype(int)
+    x = retrieved_df[["carat","cut","color", "price", "depth","table","x","y","z"]].values
     
-    x_train, x, y_train, y_true = train_test_split(x, y_true, random_state=0, test_size=0.2)
+    x_train, x, y_train, y_true = train_test_split(x, y_true, random_state=0, test_size=0.8)
 
 # test is now 10% of the initial data set
 # validation is now 10% of the initial data set
     x_val, x, y_val, y_true = train_test_split(x, y_true, random_state=0, test_size=.5)
-    #print(y_true)   
+    #print(x)   
 
 
+    #print(y_true)
+   #print(retrieved_df)
     score_dict = {}
 
+# Testing classifier.py
+
  #testing logisctical regression classifier   
-    logistic_regression_classifier = Classifier.CustomLogiscticRegression(params={'solver':'lbfgs', 'tol': 0.0001, 'max_iter': 1000}, random_state=0)
+    logistic_regression_classifier = Classifier.CustomLogiscticRegression(params={}, random_state=0) 
     logistic_regression_classifier.fit(x_train, y_train)
     log_reg_predict = logistic_regression_classifier.predict(x)
+    #log_reg_predict = log_reg_predict.astype(int)
     score_dict["Logistic Regression"] = logistic_regression_classifier.score(y_true, log_reg_predict)
     print(score_dict)
   
@@ -101,30 +111,29 @@ def main():
 # testing Knn Classifier
 
     #KNN
+    
+    """  scores = []
+    nums = range(1,25)
+    best_knn = []
+    best_score_i = -1000
 
-    #neighbour = KNeighborsRegressor(n_neighbors = best_knn)
-    #scores = []
-    #nums = range(1,25)
-    #best_knn = []
-    #best_score_i = -1000
-
-    #for i in nums:
-    #    knn = Classifier.KNeighborsClassifier(n_neighbors = i)
-    #    knn.fit(x_train, y_train)
-    #    score_i = knn.score(x, y_true)
-     #   scores.append(score_i)
+    for i in nums:
+        knn = Classifier.KNeighborsClassifier(n_neighbors = i)
+        knn.fit(x_train, y_train)
+        score_i = knn.score(x, y_true)
+        scores.append(score_i)
         
-    #    if score_i > best_score_i:
-    #        best_score_i = score_i
-    #        best_knn = i
+        if score_i > best_score_i:
+            best_score_i = score_i
+            best_knn = i
 
-    #print(best_knn)
+    print(best_knn)
 
-    #knn = Classifier.CustomKNN_Classifier(n_neighbours=best_knn, params={})
-    #knn.fit(x_train, y_train)
-    #log_reg_predict = knn.predict(x)
-    #score_dict["KNN"] = knn.score(y_true, log_reg_predict)
-    #print(score_dict)
+    knn = Classifier.CustomKNN_Classifier(n_neighbours=best_knn, params={})
+    knn.fit(x_train, y_train)
+    log_reg_predict = knn.predict(x)
+    score_dict["KNN"] = knn.score(y_true, log_reg_predict)
+    print(score_dict) """
 
  #testing Decistion Tree classifier   
    # decision_tree_classifier = Classifier.CustomDecisionTree(params={'criterion':'gini'})
@@ -155,6 +164,94 @@ def main():
     #score_dict["ANN"] = ann_classifier.score(y_true, log_reg_predict)
     #print(score_dict)
 
+# #Plot of end results
+# #plt.figure(figsize=(12,8))
+# #plt.ylim(.5, 1)
+# #sns.barplot(x=estimator, y= accuracy_score)
+
+
+# Testing Regressor.py
+    #reg_score_dict = {}
+
+#testing logisctical regression classifier   
+    #linear_regression = Regressor.CustomLinearRegression(params={}, random_state=0)
+    #linear_regression.fit(x_train, y_train)
+    #log_reg_predict = linear_regression.predict(x)
+    #reg_score_dict["Linear Regression"] = linear_regression.score(y_true, log_reg_predict)
+    #regress_r2_score = r2_score(y_true, log_reg_predict)
+    #regress_mean_score = mean_squared_error(y_true, log_reg_predict)
+    #regress_root_mean_score = root_mean_squared_error(y_true, log_reg_predict)
+    #regress_mean_absolute_score = mean_absolute_error(y_true, log_reg_predict)
+
+  
+
+# testing Knn Classifier
+
+    #KNN
+
+    #neighbour = Regressor.KNeighborsRegressor(n_neighbors = best_knn)
+    """     scores = []
+    nums = range(1,25)
+    best_knn = []
+    best_score_i = -1000
+
+    for i in nums:
+        knn_reg = Regressor.KNeighborsRegressor(n_neighbors = i)
+        knn_reg.fit(x_train, y_train)
+        score_i = knn_reg.score(x, y_true)
+        scores.append(score_i)
+        
+        if score_i > best_score_i:
+            best_score_i = score_i
+            best_knn = i
+
+    print(best_knn)
+
+    knn_reg = Regressor.CustomKNN_Regressor(n_neighbours=best_knn, params={})
+    knn_reg.fit(x_train, y_train)
+    log_reg_predict = knn_reg.predict(x)
+    reg_score_dict["KNN Regression"] = knn_reg.score(y_true, log_reg_predict)
+    regress_r2_score = r2_score(y_true, log_reg_predict)
+    regress_mean_score = mean_squared_error(y_true, log_reg_predict)
+    regress_root_mean_score = root_mean_squared_error(y_true, log_reg_predict)
+    regress_mean_absolute_score = mean_absolute_error(y_true, log_reg_predict) """
+
+ #testing Decision Tree classifier   
+    #decision_tree_reg = Regressor.CustomDecisionTreeReg(params={})
+    #decision_tree_reg.fit(x_train, y_train)
+    #log_reg_predict = decision_tree_reg.predict(x)
+    #reg_score_dict["Decision Regression"] = decision_tree_reg.score(y_true, log_reg_predict)
+    #regress_r2_score = r2_score(y_true, log_reg_predict)
+    #regress_mean_score = mean_squared_error(y_true, log_reg_predict)
+    #regress_root_mean_score = root_mean_squared_error(y_true, log_reg_predict)
+    #regress_mean_absolute_score = mean_absolute_error(y_true, log_reg_predict)
+
+ #testing Random Forest Regressor   
+    
+    """     random_forest_regressor = Regressor.CustomRandomForestReg(n_estimators=100, random_state=0,params={'max_leaf_nodes': 100})
+    random_forest_regressor.fit(x_train, y_train)
+    log_reg_predict = random_forest_regressor.predict(x)
+    reg_score_dict["Random Forest Regressor"] = random_forest_regressor.score(y_true, log_reg_predict)
+    regress_r2_score = r2_score(y_true, log_reg_predict)
+    regress_mean_score = mean_squared_error(y_true, log_reg_predict)
+    regress_root_mean_score = root_mean_squared_error(y_true, log_reg_predict)
+    regress_mean_absolute_score = mean_absolute_error(y_true, log_reg_predict) """
+
+
+#testing SVR Regressor
+    """     svr_regressor = Regressor.CustomSVR(params={}, random_state=0)
+    svr_regressor.fit(x_train, y_train)
+    log_reg_predict = svr_regressor.predict(x)
+    reg_score_dict["SVR Regression"] = svr_regressor.score(y_true, log_reg_predict)
+    regress_r2_score = r2_score(y_true, log_reg_predict)
+    regress_mean_score = mean_squared_error(y_true, log_reg_predict)
+    regress_root_mean_score = root_mean_squared_error(y_true, log_reg_predict)
+    regress_mean_absolute_score = mean_absolute_error(y_true, log_reg_predict) """
+
+#testing ANN Regressor
+    #ann_regressor = Regressor.CustomANN_Regressor(params={"hidden_layer_sizes":(100, 100, 100),'activation':'relu', 'solver':'adam', 'max_iter': 1000}, random_state=0)
+    #ann_regressor.fit(x_train, y_train)
+    #ann_regressor.score(y_true=y_true, x=x)
 # #Plot of end results
 # #plt.figure(figsize=(12,8))
 # #plt.ylim(.5, 1)

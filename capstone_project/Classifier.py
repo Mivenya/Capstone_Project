@@ -50,7 +50,7 @@ class FitPredictScore():
         return model_predict
 
     # Score = function
-    def score(self, y_true: np.array, log_reg_predict: float) -> float:
+    def score(self, y_true: np.array, log_reg_predict: np.array) -> float:
         """ This function is to score based on data within the array, and append the model name and score for a comparison
             Args:
                 y_predicted(np.array): The name of the array data predicted

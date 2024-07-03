@@ -3,13 +3,13 @@ import sys
 import pandas as pd
 import numpy as np
 
-from sklearn.metrics import accuracy_score
-from sklearn.linear_model import LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.svm import SVC
-from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import r2_score, mean_squared_error, root_mean_squared_error, mean_absolute_error
+from sklearn.linear_model import LinearRegression
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.svm import SVR
+from sklearn.neural_network import MLPRegressor
 
 from capstone_project import Analyzer
 
@@ -50,7 +50,7 @@ class FitPredictScore():
         return model_predict
 
     # Score = function
-    def score(self, y_true: np.array, log_reg_predict: float) -> float:
+    def score(self, y_true: np.array, x: np.array) -> float:
         """ This function is to score based on data within the array, and append the model name and score for a comparison
             Args:
                 y_predicted(np.array): The name of the array data predicted
@@ -58,11 +58,15 @@ class FitPredictScore():
 
             Returns: accuracy_score: The score of the data
             """
-            #### QUESTION - best way to also append the estimator/model name from the class?
-        #y_predicted = self.predict(x)
-        class_score = accuracy_score(y_true, log_reg_predict)
-        return class_score
-
+        log_reg_predict = self.predict(x)
+        reg_score = {}   
+        reg_score["R2 Score"] = r2_score(y_true, log_reg_predict)
+        regress_r2_score = r2_score(y_true, log_reg_predict)
+        regress_mean_score = mean_squared_error(y_true, log_reg_predict)
+        regress_root_mean_score = root_mean_squared_error(y_true, log_reg_predict)
+        regress_mean_absolute_score = mean_absolute_error(y_true, log_reg_predict)
+        print(reg_score)
+        return reg_score
 # Class of Classification Estimators =  any below are members
 
 #class ClassificationEstimators(FitPredictScore):
@@ -70,10 +74,10 @@ class FitPredictScore():
  #   def __init__(self):
 
 
-class CustomLogiscticRegression(FitPredictScore):
+class CustomLinearRegression(FitPredictScore):
     #estimator = "Logistic Regression"
     def __init__(self, random_state: int, params: dict):
-        model = LogisticRegression(**params)
+        model = LinearRegression(**params)
         super().__init__(random_state=random_state, model=model)
 
    #def create_model(self):
@@ -87,10 +91,10 @@ class CustomLogiscticRegression(FitPredictScore):
        #model = LogisticRegression(**self.params)
        #return model
 
-class CustomKNN_Classifier(FitPredictScore):
+class CustomKNN_Regressor(FitPredictScore):
     #estimator = "KNN"
     def __init__(self, n_neighbours: int, params: dict):
-        model = KNeighborsClassifier(n_neighbours,**params)
+        model = KNeighborsRegressor(n_neighbours,**params)
         super().__init__(random_state=None,model=model)
 
     #def create_model(self):
@@ -107,10 +111,10 @@ class CustomKNN_Classifier(FitPredictScore):
 
         #return model
 
-class CustomDecisionTree(FitPredictScore):
+class CustomDecisionTreeReg(FitPredictScore):
     #estimator = "Decision Tree"
     def __init__(self, params: dict):
-        model = DecisionTreeClassifier(**params)
+        model = DecisionTreeRegressor(**params)
         super().__init__(random_state=None, model=model)
 
 
@@ -125,10 +129,10 @@ class CustomDecisionTree(FitPredictScore):
         #model = decision_tree(params)
         #return model
 
-class CustomRandomForest(FitPredictScore):
+class CustomRandomForestReg(FitPredictScore):
     #estimator = "Random Forest"
     def __init__(self, n_estimators: int, random_state: int, params: dict):
-        model = RandomForestClassifier(n_estimators,**params)
+        model = RandomForestRegressor(n_estimators,**params)
         super().__init__(random_state=random_state, model=model)
 
 
@@ -143,10 +147,10 @@ class CustomRandomForest(FitPredictScore):
         #model = random_forest(**params)
         #return model
 
-class CustomSVC(FitPredictScore):
+class CustomSVR(FitPredictScore):
     #estimator = "SVC"
     def __init__(self, random_state: int, params: dict):
-        model = SVC(**params)
+        model = SVR(**params)
         super().__init__(random_state=random_state, model=model)
 
 
@@ -161,10 +165,10 @@ class CustomSVC(FitPredictScore):
         #model = svc(**params)
         #return model
 
-class CustomANN_Classifier(FitPredictScore):
+class CustomANN_Regressor(FitPredictScore):
     #estimator = "ANN"
     def __init__(self, random_state: int, params: dict):
-        model = MLPClassifier(**params)
+        model = MLPRegressor(**params)
         super().__init__(model=model, random_state=random_state)
 
 
@@ -179,112 +183,3 @@ class CustomANN_Classifier(FitPredictScore):
         #model = MLPClassifier(**params)
         #return model
 
-
-## OLD BELOW
-
-# Fit = function
-def fit(dataset_path: str) -> pd.DataFrame: 
-    """ This function is to fit the dataset
-        
-                             Args:
-            df (pd.Dataframe): The name of the dataframe to fit
-
-        Returns: df (pd.Dataframe): The dataframe after fit
-        """   
-    dataset = pd.read_csv(filepath_or_buffer=dataset_path)
-    return dataset
-
-# Predict = function
-def predict(dataset_path: str) -> pd.DataFrame: 
-    """ This function is to predict based on data within the dataset
-        
-                             Args:
-            df (pd.Dataframe): The name of the dataframe to predict
-
-        Returns: predict(): The prediction based on data within the dataframe
-        """       
-    return predict()
-              
-# Score = function
-def score(dataset_path: str) -> pd.DataFrame: 
-    """ This function is to score based on data within the dataset
-        
-                             Args:
-            df (pd.Dataframe): The name of the dataframe containing data being scored
-
-        Returns: score(): The score of the data
-        """   
-    return score()
-
-# Class of Regression Estimators =  any below are members 
-
-class RegressionEstimators:
-    def __init__(self, df: pd.DataFrame, column_name: str):
-        self.df = df.copy()
-
-    
-    def linear_regression(self, column_name: str) -> pd.DataFrame: 
-        """Performs regression with method of -> linear regression
-
-        Args:
-            column_name (str): The name of the column to drop missing values from.
-
-        Returns: R2_score, Mean Squared error, Root Mean Squared Error, and Mean Absolute error of the regression model of the method -> linear regression
-        """
-        
-        return linear_regression_model()
-                             
-    def knn_regression(self, column_name: str) -> pd.DataFrame: 
-        """Performs regression with method of -> KNN regression
-
-        Args:
-            column_name (str): The name of the column to drop missing values from.
-
-        Returns: R2_score, Mean Squared error, Root Mean Squared Error, and Mean Absolute error of the regression model of the method -> KNN regression
-        """
-        
-        return knn_regression_model()
-                             
-    def decision_tree(self, column_name: str) -> pd.DataFrame: 
-        """Performs regression with method of -> decision tree
-
-        Args:
-            column_name (str): The name of the column to drop missing values from.
-
-        Returns: R2_score, Mean Squared error, Root Mean Squared Error, and Mean Absolute error of the regression model of the method -> decision tree
-        """
-        
-        return decision_tree_model()
-
-    def random_forest(self, column_name: str) -> pd.DataFrame: 
-        """Performs regression with method of -> random forest
-
-        Args:
-            column_name (str): The name of the column to drop missing values from.
-
-        Returns: R2_score, Mean Squared error, Root Mean Squared Error, and Mean Absolute error of the regression model of the method -> random forest
-        """
-        
-        return random_forest_model()
-                             
-    def svr(self, column_name: str) -> pd.DataFrame: 
-        """Performs regression with method of -> SVR
-
-        Args:
-            column_name (str): The name of the column to drop missing values from.
-
-        Returns: R2_score, Mean Squared error, Root Mean Squared Error, and Mean Absolute error of the regression model of the method -> SVC
-        """
-        
-        return svr_model()
-                             
-    def ann_regression(self, column_name: str) -> pd.DataFrame: 
-        """Performs regression with method of -> artificial neural networks
-
-        Args:
-            column_name (str): The name of the column to drop missing values from.
-
-        Returns: R2_score, Mean Squared error, Root Mean Squared Error, and Mean Absolute error of the regression model of the method -> artificial neural networks
-        """
-        
-        return ann_regression_model()
