@@ -1,6 +1,3 @@
-import os
-import sys
-import pandas as pd
 import numpy as np
 
 from sklearn.metrics import r2_score, mean_squared_error, root_mean_squared_error, mean_absolute_error
@@ -11,21 +8,13 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVR
 from sklearn.neural_network import MLPRegressor
 
-from capstone_project import Analyzer
-
-#in pipeline the dictionary #models.append(estimator, accuracy_score)
 
 
-# fit_predict_score class
+# fit_predict_score class adjusting score for regression
 class FitPredictScore():
     def __init__(self, random_state: int, model: dict):
         self.random_state = random_state
         self.model = model
-        #self.params = params()
-
-    # way to see the results of multiple models and compare - to build out and plot the results
-   # def create_model():
-       # return None
 
     # Fit = function
     def fit(self, x_train: np.array, y_train: np.array) -> np.array:
@@ -51,135 +40,107 @@ class FitPredictScore():
 
     # Score = function
     def score(self, y_true: np.array, x: np.array) -> float:
-        """ This function is to score based on data within the array, and append the model name and score for a comparison
+        """ This function is to score based on data within the array with 4 metrics, and list all 4 metrics in a dictionary
+            
             Args:
-                y_predicted(np.array): The name of the array data predicted
-                accuracy_score: the score based on the true vs predicted results
+                x(np.array): The name of the array for testing/prediction
+                log_reg_predict(np.array): The result of the prediction to compare with y_true values
+                y_true(np.array): The name of the array of true values for comparison with prediction
+                r2_score(float): Score of this metric name
+                mean_squared_error(float): Score of this metric name
+                root_mean_squared_error(float): Score of this metric name
+                mean_absolute_error(float): Score of this metric name
 
-            Returns: accuracy_score: The score of the data
+            Returns: reg_score(dict): The printout of the dictionary showing the resulting metrics of the model
             """
         log_reg_predict = self.predict(x)
         reg_score = {}   
         reg_score["R2 Score"] = r2_score(y_true, log_reg_predict)
-        regress_r2_score = r2_score(y_true, log_reg_predict)
-        regress_mean_score = mean_squared_error(y_true, log_reg_predict)
-        regress_root_mean_score = root_mean_squared_error(y_true, log_reg_predict)
-        regress_mean_absolute_score = mean_absolute_error(y_true, log_reg_predict)
+        reg_score["Mean Squared Error"] = mean_squared_error(y_true, log_reg_predict)
+        reg_score["Root Mean Squared Error"] =  root_mean_squared_error(y_true, log_reg_predict)
+        reg_score["Mean Absolute Error"] = mean_absolute_error(y_true, log_reg_predict)
         print(reg_score)
         return reg_score
-# Class of Classification Estimators =  any below are members
 
-#class ClassificationEstimators(FitPredictScore):
- #   estimator = estimator
- #   def __init__(self):
+# Classes of Regressors 
 
+#Class for Linear Regression
 
 class CustomLinearRegression(FitPredictScore):
-    #estimator = "Logistic Regression"
     def __init__(self, random_state: int, params: dict):
         model = LinearRegression(**params)
         super().__init__(random_state=random_state, model=model)
 
-   #def create_model(self):
-        """Performs classification with method of -> logistical regression
+    """Performs Regression with method of -> linear regression
 
         Args:
             model(): The model with the selected classification method.
 
-        Returns: model for the method -> logistical regression
+        Returns: None
         """
-       #model = LogisticRegression(**self.params)
-       #return model
 
 class CustomKNN_Regressor(FitPredictScore):
-    #estimator = "KNN"
     def __init__(self, n_neighbours: int, params: dict):
         model = KNeighborsRegressor(n_neighbours,**params)
         super().__init__(random_state=None,model=model)
 
-    #def create_model(self):
-        """Performs classification with method of -> logistical regression
+    """Performs regression with method of -> KNN regression
 
         Args:
+            n_neighbours(int): the best neighbours
             model(): The model with the selected classification method.
 
-        Returns: model for the method -> logistical regression
+        Returns: None
         """
 
-        #neighbour = KNeighborsClassifier(n_neighbors = best_knn)
-
-
-        #return model
-
 class CustomDecisionTreeReg(FitPredictScore):
-    #estimator = "Decision Tree"
     def __init__(self, params: dict):
         model = DecisionTreeRegressor(**params)
         super().__init__(random_state=None, model=model)
 
-
-    #def create_model(self):
-        """Performs classification with method of -> logistical regression
+        """Performs regression with method of -> Decision Tree regression
 
         Args:
             model(): The model with the selected classification method.
 
-        Returns: model for the method -> logistical regression
+        Returns: None
         """
-        #model = decision_tree(params)
-        #return model
 
 class CustomRandomForestReg(FitPredictScore):
-    #estimator = "Random Forest"
     def __init__(self, n_estimators: int, random_state: int, params: dict):
         model = RandomForestRegressor(n_estimators,**params)
         super().__init__(random_state=random_state, model=model)
 
-
-    #def create_model(self):
-        """Performs classification with method of -> logistical regression
+        """Performs regression with method of -> random forest regression
 
         Args:
             model(): The model with the selected classification method.
 
-        Returns: model for the method -> logistical regression
+        Returns: None
         """
-        #model = random_forest(**params)
-        #return model
 
 class CustomSVR(FitPredictScore):
-    #estimator = "SVC"
     def __init__(self, random_state: int, params: dict):
         model = SVR(**params)
         super().__init__(random_state=random_state, model=model)
 
-
-   # def create_model(self):
-        """Performs classification with method of -> logistical regression
+        """Performs regression with method of -> SVR regression
 
         Args:
             model(): The model with the selected classification method.
 
-        Returns: model for the method -> logistical regression
+        Returns: None
         """
-        #model = svc(**params)
-        #return model
 
 class CustomANN_Regressor(FitPredictScore):
-    #estimator = "ANN"
     def __init__(self, random_state: int, params: dict):
         model = MLPRegressor(**params)
         super().__init__(model=model, random_state=random_state)
 
-
-   # def create_model(self):
-        """Performs classification with method of -> logistical regression
+        """Performs regression with method of -> ANN regression
 
         Args:
             model(): The model with the selected classification method.
 
-        Returns: model for the method -> logistical regression
+        Returns: None
         """
-        #model = MLPClassifier(**params)
-        #return model
-

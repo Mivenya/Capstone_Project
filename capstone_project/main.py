@@ -89,22 +89,21 @@ def main():
 # test is now 10% of the initial data set
 # validation is now 10% of the initial data set
     x_val, x, y_val, y_true = train_test_split(x, y_true, random_state=0, test_size=.5)
-    #print(x)   
 
-
-    #print(y_true)
-   #print(retrieved_df)
     score_dict = {}
 
-# Testing classifier.py
+# # Testing classifier.py
 
- #testing logisctical regression classifier   
-    logistic_regression_classifier = Classifier.CustomLogiscticRegression(params={}, random_state=0) 
-    logistic_regression_classifier.fit(x_train, y_train)
-    log_reg_predict = logistic_regression_classifier.predict(x)
-    #log_reg_predict = log_reg_predict.astype(int)
-    score_dict["Logistic Regression"] = logistic_regression_classifier.score(y_true, log_reg_predict)
-    print(score_dict)
+# NOTES for presentation: for Classifier we want the label to be clarity of the diamonds.
+
+    score_dict = {}
+
+#  #testing logisctical regression classifier   
+#     logistic_regression_classifier = Classifier.CustomLogiscticRegression(params={}, random_state=0) 
+#     logistic_regression_classifier.fit(x_train, y_train)
+#     log_reg_predict = logistic_regression_classifier.predict(x)
+#     score_dict["Logistic Regression"] = logistic_regression_classifier.score(y_true, log_reg_predict)
+#     print(score_dict)
   
 
 
@@ -171,89 +170,62 @@ def main():
 
 
 # Testing Regressor.py
-    #reg_score_dict = {}
 
-#testing logisctical regression classifier   
-    #linear_regression = Regressor.CustomLinearRegression(params={}, random_state=0)
-    #linear_regression.fit(x_train, y_train)
-    #log_reg_predict = linear_regression.predict(x)
-    #reg_score_dict["Linear Regression"] = linear_regression.score(y_true, log_reg_predict)
-    #regress_r2_score = r2_score(y_true, log_reg_predict)
-    #regress_mean_score = mean_squared_error(y_true, log_reg_predict)
-    #regress_root_mean_score = root_mean_squared_error(y_true, log_reg_predict)
-    #regress_mean_absolute_score = mean_absolute_error(y_true, log_reg_predict)
+# NOTES for presentation: for Regressor we want to switch price and clarity again for label as the problem we are trying to solve with regression is the pricing of the diamonds based on their features
 
-  
+#testing Linear Regressor  
+    linear_regression = Regressor.CustomLinearRegression(params={}, random_state=0)
+    linear_regression.fit(x_train, y_train)
+    linear_regression.score(y_true=y_true, x=x)
+ 
 
-# testing Knn Classifier
+# testing Knn Regressor
 
-    #KNN
+#KNN
 
-    #neighbour = Regressor.KNeighborsRegressor(n_neighbors = best_knn)
-    """     scores = []
-    nums = range(1,25)
-    best_knn = []
-    best_score_i = -1000
+    # scores = []
+    # nums = range(1,25)
+    # best_knn = []
+    # best_score_i = -1000
 
-    for i in nums:
-        knn_reg = Regressor.KNeighborsRegressor(n_neighbors = i)
-        knn_reg.fit(x_train, y_train)
-        score_i = knn_reg.score(x, y_true)
-        scores.append(score_i)
+    # for i in nums:
+    #     knn_reg = Regressor.KNeighborsRegressor(n_neighbors = i)
+    #     knn_reg.fit(x_train, y_train)
+    #     score_i = knn_reg.score(x, y_true)
+    #     scores.append(score_i)
         
-        if score_i > best_score_i:
-            best_score_i = score_i
-            best_knn = i
+    #     if score_i > best_score_i:
+    #         best_score_i = score_i
+    #         best_knn = i
 
-    print(best_knn)
+    # print(best_knn)
 
-    knn_reg = Regressor.CustomKNN_Regressor(n_neighbours=best_knn, params={})
-    knn_reg.fit(x_train, y_train)
-    log_reg_predict = knn_reg.predict(x)
-    reg_score_dict["KNN Regression"] = knn_reg.score(y_true, log_reg_predict)
-    regress_r2_score = r2_score(y_true, log_reg_predict)
-    regress_mean_score = mean_squared_error(y_true, log_reg_predict)
-    regress_root_mean_score = root_mean_squared_error(y_true, log_reg_predict)
-    regress_mean_absolute_score = mean_absolute_error(y_true, log_reg_predict) """
+    # knn_reg = Regressor.CustomKNN_Regressor(n_neighbours=best_knn, params={})
+    # knn_reg.fit(x_train, y_train)
+    # knn_reg.score(y_true=y_true, x=x)
 
- #testing Decision Tree classifier   
-    #decision_tree_reg = Regressor.CustomDecisionTreeReg(params={})
-    #decision_tree_reg.fit(x_train, y_train)
-    #log_reg_predict = decision_tree_reg.predict(x)
-    #reg_score_dict["Decision Regression"] = decision_tree_reg.score(y_true, log_reg_predict)
-    #regress_r2_score = r2_score(y_true, log_reg_predict)
-    #regress_mean_score = mean_squared_error(y_true, log_reg_predict)
-    #regress_root_mean_score = root_mean_squared_error(y_true, log_reg_predict)
-    #regress_mean_absolute_score = mean_absolute_error(y_true, log_reg_predict)
+
+ #testing Decision Tree Regressor   
+    # decision_tree_reg = Regressor.CustomDecisionTreeReg(params={})
+    # decision_tree_reg.fit(x_train, y_train)
+    # decision_tree_reg.score(y_true=y_true, x=x)
+
 
  #testing Random Forest Regressor   
     
-    """     random_forest_regressor = Regressor.CustomRandomForestReg(n_estimators=100, random_state=0,params={'max_leaf_nodes': 100})
-    random_forest_regressor.fit(x_train, y_train)
-    log_reg_predict = random_forest_regressor.predict(x)
-    reg_score_dict["Random Forest Regressor"] = random_forest_regressor.score(y_true, log_reg_predict)
-    regress_r2_score = r2_score(y_true, log_reg_predict)
-    regress_mean_score = mean_squared_error(y_true, log_reg_predict)
-    regress_root_mean_score = root_mean_squared_error(y_true, log_reg_predict)
-    regress_mean_absolute_score = mean_absolute_error(y_true, log_reg_predict) """
+    # random_forest_regressor = Regressor.CustomRandomForestReg(n_estimators=100, random_state=0,params={'max_leaf_nodes': 100})
+    # random_forest_regressor.fit(x_train, y_train)
+    # random_forest_regressor.score(y_true=y_true, x=x)
 
 
 #testing SVR Regressor
-    """     svr_regressor = Regressor.CustomSVR(params={}, random_state=0)
-    svr_regressor.fit(x_train, y_train)
-    log_reg_predict = svr_regressor.predict(x)
-    reg_score_dict["SVR Regression"] = svr_regressor.score(y_true, log_reg_predict)
-    regress_r2_score = r2_score(y_true, log_reg_predict)
-    regress_mean_score = mean_squared_error(y_true, log_reg_predict)
-    regress_root_mean_score = root_mean_squared_error(y_true, log_reg_predict)
-    regress_mean_absolute_score = mean_absolute_error(y_true, log_reg_predict) """
+    # svr_regressor = Regressor.CustomSVR(params={}, random_state=0)
+    # svr_regressor.fit(x_train, y_train)
+    # svr_regressor.score(y_true=y_true, x=x)
 
 #testing ANN Regressor
     #ann_regressor = Regressor.CustomANN_Regressor(params={"hidden_layer_sizes":(100, 100, 100),'activation':'relu', 'solver':'adam', 'max_iter': 1000}, random_state=0)
     #ann_regressor.fit(x_train, y_train)
     #ann_regressor.score(y_true=y_true, x=x)
-# #Plot of end results
-# #plt.figure(figsize=(12,8))
-# #plt.ylim(.5, 1)
-# #sns.barplot(x=estimator, y= accuracy_score)
+
 main()
