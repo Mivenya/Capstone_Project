@@ -52,8 +52,8 @@ class CustomKMeans(FitPredict):
         """
     
 class CustomAgglomerativeClustering(FitPredict):
-    def __init__(self, params: dict):
-        model = AgglomerativeClustering(**params)
+    def __init__(self, n_clusters: int, params: dict):
+        model = AgglomerativeClustering(n_clusters,**params)
         super().__init__(random_state=None,model=model)
 
     """Performs clustering with method of -> Agglomerative Hierarchal Clustering
@@ -77,6 +77,4 @@ class CustomMeanShift(FitPredict):
 
         Returns: None
         """
-
-
 

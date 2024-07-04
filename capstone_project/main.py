@@ -23,7 +23,7 @@ def main():
     data_df = my_data_manipulation.drop_missing_data(df)
     #print(data_df)
 
-# Drop columns if needed
+# Drop columns if needed - for clustering drop additional if needed
     cleaned_df = my_data_manipulation.drop_column(column_names="Unnamed: 0")
     #print(cleaned_df)
 
@@ -236,32 +236,33 @@ def main():
 #Testing Clustering
 
 # # training data is different for clustering
-    x_columns = 10
+    retrieved_df = retrieved_df[['price', "carat","cut","color","clarity"]]
+    x_columns = 2
     x = retrieved_df.iloc[:, 0:x_columns].values
 
 
 #testing K-Means Clustering
 
+
     # Elbow method
     
     kmean_cluster = Clustering.CustomKMeans(n_clusters = 3, random_state=0, params={})
 
-    # kmeanscores = []
+    kmeanscores = []
     
-    # for i in range(1, 21):
-    #     model = KMeans(n_clusters=i, random_state=0)
-    #     model.fit(x)
-    #     kmeanscores.append(model.inertia_)
+    for i in range(1, 21):
+        model = KMeans(n_clusters=i, random_state=0)
+        model.fit(x)
+        kmeanscores.append(model.inertia_)
 
-    # import matplotlib.pyplot as plt
-    # plt.plot(range(1, 21), kmeanscores, marker='.', markersize=10)
-    # plt.title('The Elbow Method')
-    # plt.xlabel('Number of clusters')
-    # plt.ylabel('SSE') # Model Inertia
-    # plt.show()
+    import matplotlib.pyplot as plt
+    plt.plot(range(1, 21), kmeanscores, marker='.', markersize=10)
+    plt.title('The Elbow Method')
+    plt.xlabel('Number of clusters')
+    plt.ylabel('SSE') # Model Inertia
+    plt.show()
 
     kmeans_label = kmean_cluster.fit(x)
-    #print(kmeans_label)
     kmeans_predict = kmean_cluster.predict(x)
     print(kmeans_predict)
 #    centres = kmeans_label.cluster_centers_ #  having trouble with this line to get it working
@@ -277,10 +278,15 @@ def main():
     colors = ['orange', 'blue', 'green', 'magenta', 'cyan']
     for i in range(3):
         plt.scatter(x[kmeans_predict == i, 0], x[kmeans_predict == i, 1], c=colors[i])
-    plt.scatter(model.cluster_centers_[:, 0], model.cluster_centers_[:, 1], color='red', marker='+', s=100)
+    plt.scatter(model.cluster_centers_[:, 0], model.cluster_centers_[:, 1], color='red', marker='+')
     plt.title('K-Means Clustering')
-    plt.xlabel('Annual Income (k$)')
-    plt.ylabel('Spending Score (1-100)')
+    plt.xlabel('temp')
+    plt.ylabel('temp')
     plt.show()
 
+# Agglomerative Clustering
+    agglom_cluster = Clustering.CustomAgglomerativeClustering(n_clusters = 3, params={})
+    agglom_cluster = agglom_cluster.fit(x)
+    agglom_cluster = agglom_cluster.predict(x)
+    print(agglom_cluster)
 main()
