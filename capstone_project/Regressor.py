@@ -74,7 +74,7 @@ class CustomLinearRegression(FitPredictScore):
     """Performs Regression with method of -> linear regression
 
         Args:
-            model(): The model with the selected classification method.
+            model(): The model with the selected regression method.
 
         Returns: None
         """
@@ -88,7 +88,7 @@ class CustomKNN_Regressor(FitPredictScore):
 
         Args:
             n_neighbors(int): the best neighbours
-            model(): The model with the selected classification method.
+            model(): The model with the selected regression method.
 
         Returns: None
         """
@@ -101,7 +101,7 @@ class CustomDecisionTreeReg(FitPredictScore):
         """Performs regression with method of -> Decision Tree regression
 
         Args:
-            model(): The model with the selected classification method.
+            model(): The model with the selected regression method.
 
         Returns: None
         """
@@ -114,7 +114,7 @@ class CustomRandomForestReg(FitPredictScore):
         """Performs regression with method of -> random forest regression
 
         Args:
-            model(): The model with the selected classification method.
+            model(): The model with the selected regression method.
 
         Returns: None
         """
@@ -127,7 +127,7 @@ class CustomSVR(FitPredictScore):
         """Performs regression with method of -> SVR regression
 
         Args:
-            model(): The model with the selected classification method.
+            model(): The model with the selected regression method.
 
         Returns: None
         """
@@ -140,7 +140,7 @@ class CustomANN_Regressor(FitPredictScore):
         """Performs regression with method of -> ANN regression
 
         Args:
-            model(): The model with the selected classification method.
+            model(): The model with the selected regression method.
 
         Returns: None
         """
