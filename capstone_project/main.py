@@ -1,4 +1,4 @@
-from capstone_project import Analyzer, Classifier, Regressor
+from capstone_project import Analyzer, Classifier, Regressor, Clustering
 
 from sklearn.model_selection import train_test_split
 #from sklearn.metrics import r2_score, mean_squared_error, root_mean_squared_error, mean_absolute_error
