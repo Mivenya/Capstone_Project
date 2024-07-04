@@ -246,19 +246,19 @@ def main():
     
     kmean_cluster = Clustering.CustomKMeans(n_clusters = 3, random_state=0, params={})
 
-    kmeanscores = []
+    # kmeanscores = []
     
-    for i in range(1, 21):
-        model = KMeans(n_clusters=i, random_state=0)
-        model.fit(x)
-        kmeanscores.append(model.inertia_)
+    # for i in range(1, 21):
+    #     model = KMeans(n_clusters=i, random_state=0)
+    #     model.fit(x)
+    #     kmeanscores.append(model.inertia_)
 
-    import matplotlib.pyplot as plt
-    plt.plot(range(1, 21), kmeanscores, marker='.', markersize=10)
-    plt.title('The Elbow Method')
-    plt.xlabel('Number of clusters')
-    plt.ylabel('SSE') # Model Inertia
-    plt.show()
+    # import matplotlib.pyplot as plt
+    # plt.plot(range(1, 21), kmeanscores, marker='.', markersize=10)
+    # plt.title('The Elbow Method')
+    # plt.xlabel('Number of clusters')
+    # plt.ylabel('SSE') # Model Inertia
+    # plt.show()
 
     kmeans_label = kmean_cluster.fit(x)
     #print(kmeans_label)
@@ -266,5 +266,21 @@ def main():
     print(kmeans_predict)
 #    centres = kmeans_label.cluster_centers_ #  having trouble with this line to get it working
  #   print(centres)
+ # centres = kmeans_predict.cluster_centers_ #  having trouble with this line to get it working
+    centres = []
+        
+    for i in range(1, 3):
+        model = KMeans(n_clusters=3, random_state=0)
+        model.fit(x)
+        centres.append(model.cluster_centers_)
+ 
+    colors = ['orange', 'blue', 'green', 'magenta', 'cyan']
+    for i in range(3):
+        plt.scatter(x[kmeans_predict == i, 0], x[kmeans_predict == i, 1], c=colors[i])
+    plt.scatter(model.cluster_centers_[:, 0], model.cluster_centers_[:, 1], color='red', marker='+', s=100)
+    plt.title('K-Means Clustering')
+    plt.xlabel('Annual Income (k$)')
+    plt.ylabel('Spending Score (1-100)')
+    plt.show()
 
 main()
