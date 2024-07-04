@@ -10,7 +10,7 @@ class FitPredict():
         self.model = model
 
     # Fit = function
-    def fit(self, x_train: np.array, y_train: np.array) -> np.array:
+    def fit(self, x: np.array) -> np.array:
         """ This function is to fit the data with x and y training arrays
               Args:
                 x_train(np.array): The name of the x array to fit
@@ -18,7 +18,9 @@ class FitPredict():
 
             Returns: model(np.array): The arrays after fit
         """
-        self.model.fit(x_train, y_train)
+        kmeans = self.model.fit(x)
+        #print(kmeans.labels_)
+        return kmeans.labels_
 
     # Predict = function
     def predict(self, x: np.array) -> np.array:
@@ -28,8 +30,8 @@ class FitPredict():
 
             Returns: model_predict(np.array): The prediction on the array data
         """
-        model_predict = self.model.predict(x)
-        return model_predict
+        kmeans = self.model.predict(x)
+        return kmeans
 
   
 # Classes of Clustering 
@@ -37,21 +39,21 @@ class FitPredict():
 #Class for K-Means Clustering
 
 class CustomKMeans(FitPredict):
-    def __init__(self, random_state: int, params: dict):
-        model = KMeans(**params)
-        super().__init__(random_state=random_state, model=model)
+    def __init__(self, n_clusters: int, random_state: int, params: dict):
+        model = KMeans(n_clusters,**params)
+        super().__init__(random_state=0, model=model)
 
     """Performs Clustering with method of -> K-Means regression
 
         Args:
             model(): The model with the selected K-Means method.
 
-        Returns: None
+        Returns: Labels and inertia
         """
-
+    
 class CustomAgglomerativeClustering(FitPredict):
-    def __init__(self, n_neighbors: int, params: dict):
-        model = AgglomerativeClustering(n_neighbors,**params)
+    def __init__(self, params: dict):
+        model = AgglomerativeClustering(**params)
         super().__init__(random_state=None,model=model)
 
     """Performs clustering with method of -> Agglomerative Hierarchal Clustering
