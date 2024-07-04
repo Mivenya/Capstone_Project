@@ -1,6 +1,7 @@
 from capstone_project import Analyzer, Classifier, Regressor, Clustering
 
 from sklearn.model_selection import train_test_split
+from sklearn.cluster import KMeans, AgglomerativeClustering, MeanShift
 #from sklearn.metrics import r2_score, mean_squared_error, root_mean_squared_error, mean_absolute_error
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -240,12 +241,30 @@ def main():
 
 
 #testing K-Means Clustering
+
+    # Elbow method
     
-    kmean_cluster = Clustering.CustomKMeans(n_clusters = 5, random_state=0, params={})
+    kmean_cluster = Clustering.CustomKMeans(n_clusters = 3, random_state=0, params={})
+
+    kmeanscores = []
+    
+    for i in range(1, 21):
+        model = KMeans(n_clusters=i, random_state=0)
+        model.fit(x)
+        kmeanscores.append(model.inertia_)
+
+    import matplotlib.pyplot as plt
+    plt.plot(range(1, 21), kmeanscores, marker='.', markersize=10)
+    plt.title('The Elbow Method')
+    plt.xlabel('Number of clusters')
+    plt.ylabel('SSE') # Model Inertia
+    plt.show()
+
     kmeans_label = kmean_cluster.fit(x)
-    print(kmeans_label)
+    #print(kmeans_label)
     kmeans_predict = kmean_cluster.predict(x)
     print(kmeans_predict)
-
+#    centres = kmeans_label.cluster_centers_ #  having trouble with this line to get it working
+ #   print(centres)
 
 main()

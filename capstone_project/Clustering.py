@@ -18,9 +18,9 @@ class FitPredict():
 
             Returns: model(np.array): The arrays after fit
         """
-        kmeans = self.model.fit(x)
-        #print(kmeans.labels_)
-        return kmeans.labels_
+        model = self.model.fit(x)
+        #centres=model.cluster_centers_
+        #return centres
 
     # Predict = function
     def predict(self, x: np.array) -> np.array:
@@ -30,8 +30,8 @@ class FitPredict():
 
             Returns: model_predict(np.array): The prediction on the array data
         """
-        kmeans = self.model.predict(x)
-        return kmeans
+        model = self.model.predict(x)
+        return model
 
   
 # Classes of Clustering 
@@ -40,7 +40,7 @@ class FitPredict():
 
 class CustomKMeans(FitPredict):
     def __init__(self, n_clusters: int, random_state: int, params: dict):
-        model = KMeans(n_clusters,**params)
+        model = KMeans(n_clusters, random_state=random_state,**params)
         super().__init__(random_state=0, model=model)
 
     """Performs Clustering with method of -> K-Means regression
@@ -77,4 +77,21 @@ class CustomMeanShift(FitPredict):
 
         Returns: None
         """
+
+# centres = kmeans_predict.cluster_centers_ #  having trouble with this line to get it working
+    # centres = []
+        
+    # for i in range(1, 3):
+    #     model = KMeans(n_clusters=3, random_state=0)
+    #     model.fit(x)
+    #     centres.append(model.cluster_centers_)
+ 
+    # colors = ['orange', 'blue', 'green', 'magenta', 'cyan']
+    # for i in range(3):
+    #     plt.scatter(x[kmeans_predict == i, 0], x[kmeans_predict == i, 1], c=colors[i])
+    # plt.scatter(model.cluster_centers_[:, 0], model.cluster_centers_[:, 1], color='red', marker='+', s=100)
+    # plt.title('K-Means Clustering')
+    # plt.xlabel('Annual Income (k$)')
+    # plt.ylabel('Spending Score (1-100)')
+    # plt.show()
 
