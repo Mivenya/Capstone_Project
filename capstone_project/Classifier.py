@@ -1,6 +1,6 @@
 import numpy as np
 
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -60,6 +60,7 @@ class FitPredictScore():
         log_reg_predict = self.predict(x)
         conf_matrix_list = {}
         conf_matrix_list["Confusion Matrix"] = confusion_matrix(y_true, log_reg_predict)
+        #cm_display = self.ConfusionMatrixDisplay(y_true, log_reg_predict)
         return conf_matrix_list
     
 
@@ -67,7 +68,6 @@ class FitPredictScore():
     # def plt_conf_matrix(self, y_true: np.array, x: np.array) -> plt:  
     #     log_reg_predict = self.predict(x)
     #     cm_display = self.ConfusionMatrixDisplay(y_true, log_reg_predict)
-    # #     log_reg_predict = self.predict(x)
     #     matrix = confusion_matrix(y_true, log_reg_predict)
     #     plt.figure(figsize=(8,6))
     #     labels = ['True Neg', 'False Pos', 'False Neg', 'True Pos']

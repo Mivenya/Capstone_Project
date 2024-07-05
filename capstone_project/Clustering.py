@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.cluster import KMeans, AgglomerativeClustering, MeanShift
 
 
+
 # fit_predict_score class adjusting score for regression
 class FitPredict():
     def __init__(self, random_state: int, model: dict):
@@ -30,7 +31,7 @@ class FitPredict():
 
             Returns: model_predict(np.array): The prediction on the array data
         """
-        model = self.model.predict(x)
+        model = self.model.fit_predict(x)
         return model
 
   
