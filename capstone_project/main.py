@@ -84,9 +84,9 @@ def main():
 #Before fitting and training we need to split the data
 
 # train is now 80% of the entire data set
-    y_true = retrieved_df['price'].values
+    y_true = retrieved_df['clarity'].values
     y_true = y_true.astype(int) #needed to add as wasn't turning into an object
-    x = retrieved_df[["carat","cut","color", "clarity", "depth","table","x","y","z"]].values
+    x = retrieved_df[["carat","cut","color", "price", "depth","table","x","y","z"]].values
     
     x_train, x, y_train, y_true = train_test_split(x, y_true, random_state=0, test_size=0.8)
 
@@ -97,30 +97,30 @@ def main():
 
 # Testing classifier.py
 
-#NOTES for presentation: for Classifier we want the label to be clarity of the diamonds.
+# #NOTES for presentation: for Classifier we want the label to be clarity of the diamonds.
 
-    score_dict = {}
-    matrix_dict = {}
+#     score_dict = {}
+#     matrix_dict = {}
 
-#  #testing logisctical regression classifier   
-# NOTES: for presentation - use scalar and max iter 1000 for result of approx .55-.57
-    logistic_regression_classifier = Classifier.CustomLogisticRegression(params={'solver':'lbfgs', 'C':1.0,'max_iter':1000}, random_state=0) 
-    logistic_regression_classifier.fit(x_train, y_train)
-    score_dict["Logistic Regression"] = logistic_regression_classifier.score(y_true=y_true, x=x)
-    matrix_dict["Logistic Regression"] = logistic_regression_classifier.conf_matrix(y_true=y_true, x=x)
-    logistic_regression_classifier.conf_matrix(y_true=y_true, x=x)
-    print(logistic_regression_classifier)
+# #  #testing logisctical regression classifier   
+# # NOTES: for presentation - use scalar and max iter 1000 for result of approx .55-.57
+#     logistic_regression_classifier = Classifier.CustomLogisticRegression(params={'solver':'lbfgs', 'C':1.0,'max_iter':1000}, random_state=0) 
+#     logistic_regression_classifier.fit(x_train, y_train)
+#     score_dict["Logistic Regression"] = logistic_regression_classifier.score(y_true=y_true, x=x)
+#     matrix_dict["Logistic Regression"] = logistic_regression_classifier.conf_matrix(y_true=y_true, x=x)
+#     logistic_regression_classifier.conf_matrix(y_true=y_true, x=x)
+#     print(logistic_regression_classifier)
      
     
-    # matrix = confusion_matrix(y_true, log_reg_predict)
-    # plt.figure(figsize=(8,6))
-    # labels = ['True Neg', 'False Pos', 'False Neg', 'True Pos']
-    # labels = np.asarray(labels).reshape(2,2)
-    # sns.heatmap(matrix, annot=True, fmt='', cmap='Blues')
-    # return plt.show()
-# testing Knn Classifier
-# NOTES: for presentation - Appears best n_neighbor is always 1 and consistently scores .55
-    #first find best n_neighbor
+#     # matrix = confusion_matrix(y_true, log_reg_predict)
+#     # plt.figure(figsize=(8,6))
+#     # labels = ['True Neg', 'False Pos', 'False Neg', 'True Pos']
+#     # labels = np.asarray(labels).reshape(2,2)
+#     # sns.heatmap(matrix, annot=True, fmt='', cmap='Blues')
+#     # return plt.show()
+# #testing Knn Classifier
+# #NOTES: for presentation - Appears best n_neighbor is always 1 and consistently scores .55
+#  #   first find best n_neighbor
         
 #     scores = []
 #     nums = range(1,25)
@@ -179,7 +179,7 @@ def main():
 # # #Plot of end results
 #     plt.figure(figsize=(12,8))
 #     plt.ylim(.5, 1)
-#     sns.barplot(score_dict).set_title('Comparison of Regression models with target Price')
+#     sns.barplot(score_dict).set_title('Comparison of Classification models with target Quality')
 #     plt.show()
 
 
